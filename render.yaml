@@ -1,0 +1,16 @@
+# Blueprint de Render (Propuesto). Ajustar el nombre y el plan antes de usarlo.
+services:
+  - type: web
+    name: eventu-api
+    runtime: python
+    plan: free
+    buildCommand: pip install .
+    startCommand: alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: SEED_ON_STARTUP
+        value: "true"
+      - key: DATABASE_URL
+        sync: false   # se pega en el panel de Render; no va en el repo

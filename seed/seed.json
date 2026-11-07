@@ -1,0 +1,1824 @@
+{
+ "nota": "Datos de ejemplo, por validar con proveedores reales",
+ "providers": [
+  {
+   "id": "prv-salon-los-guaduales",
+   "name": "Salón Los Guaduales",
+   "description": "Salón de eventos con jardín y pista de baile para celebraciones medianas y grandes.",
+   "neighborhood": "Ciudad Jardín",
+   "municipality": "Cali",
+   "phone": "3000000001",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.368,
+   "longitude": -76.538,
+   "featured": true,
+   "images": [
+    {
+     "id": "6efc4755-c998-52de-81cf-c85ef5bd74dc",
+     "url": "https://picsum.photos/seed/salon-los-guaduales-1/800/600",
+     "alt_text": "Foto 1 de Salón Los Guaduales (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "7ab34973-fc04-5e21-96fe-74d13185899e",
+     "url": "https://picsum.photos/seed/salon-los-guaduales-2/800/600",
+     "alt_text": "Foto 2 de Salón Los Guaduales (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "3628c2fc-0702-553b-b827-41a343f3f562",
+     "url": "https://picsum.photos/seed/salon-los-guaduales-3/800/600",
+     "alt_text": "Foto 3 de Salón Los Guaduales (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "0179a733-a72a-54aa-bb85-ff412be6a3aa",
+     "url": "https://picsum.photos/seed/salon-los-guaduales-4/800/600",
+     "alt_text": "Foto 4 de Salón Los Guaduales (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "6fc15a19-8a6d-52aa-ac9f-06c725e29adc",
+     "author_name": "María P.",
+     "rating": 5,
+     "comment": "El lugar estaba impecable y quedó espacio de sobra para bailar.",
+     "reviewed_on": "2026-06-01"
+    },
+    {
+     "id": "3a436d56-dd92-5196-8ad5-eeeb30e65b54",
+     "author_name": "Carlos R.",
+     "rating": 4,
+     "comment": "Muy buena atención del equipo y el montaje fue puntual.",
+     "reviewed_on": "2026-06-18"
+    },
+    {
+     "id": "616fc002-ad17-5708-b88e-58ed498ea32d",
+     "author_name": "Laura G.",
+     "rating": 5,
+     "comment": "Bonito sitio, aunque el parqueadero se llenó rápido.",
+     "reviewed_on": "2026-07-05"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "072aa537-42f2-5639-b1ea-853f9b0f24aa",
+     "check_type": "identidad",
+     "checked_on": "2026-09-15",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "34486483-c795-5165-8395-3669c02beaed",
+     "check_type": "registro_mercantil",
+     "checked_on": "2026-09-20",
+     "notes": "Registro mercantil vigente revisado (dato de ejemplo)."
+    },
+    {
+     "id": "7a0ed00a-ab28-518c-8765-0b154061e662",
+     "check_type": "visita",
+     "checked_on": "2026-09-25",
+     "notes": "Visita a las instalaciones o a un montaje reciente (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-casa-quinta-pance",
+   "name": "Casa Quinta Pance",
+   "description": "Casa campestre con zona verde, piscina decorativa y parqueadero.",
+   "neighborhood": "Pance",
+   "municipality": "Cali",
+   "phone": "3000000002",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.322,
+   "longitude": -76.54,
+   "featured": true,
+   "images": [
+    {
+     "id": "7b509707-311f-5df4-9abe-3ada44c290fc",
+     "url": "https://picsum.photos/seed/casa-quinta-pance-1/800/600",
+     "alt_text": "Foto 1 de Casa Quinta Pance (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "277697a1-5484-5ace-80d3-dac40d95f28e",
+     "url": "https://picsum.photos/seed/casa-quinta-pance-2/800/600",
+     "alt_text": "Foto 2 de Casa Quinta Pance (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "c6b7bb7a-2146-516c-93c5-98e6bba6dbc6",
+     "url": "https://picsum.photos/seed/casa-quinta-pance-3/800/600",
+     "alt_text": "Foto 3 de Casa Quinta Pance (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "65602951-63d3-5a9b-9cbc-cec8c9b53757",
+     "url": "https://picsum.photos/seed/casa-quinta-pance-4/800/600",
+     "alt_text": "Foto 4 de Casa Quinta Pance (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "ef75f3f1-4cf1-5d15-b94d-4d098fab8369",
+     "author_name": "Carlos R.",
+     "rating": 5,
+     "comment": "Muy buena atención del equipo y el montaje fue puntual.",
+     "reviewed_on": "2026-06-12"
+    },
+    {
+     "id": "d5351d9c-5980-5ef3-941a-e6c5d8cfbf47",
+     "author_name": "Laura G.",
+     "rating": 4,
+     "comment": "Bonito sitio, aunque el parqueadero se llenó rápido.",
+     "reviewed_on": "2026-06-29"
+    },
+    {
+     "id": "5d35c5f7-0bae-5ce9-9c32-39265727a08e",
+     "author_name": "Andrés M.",
+     "rating": 3,
+     "comment": "Cumplió con lo acordado y los invitados quedaron contentos.",
+     "reviewed_on": "2026-07-16"
+    },
+    {
+     "id": "37e9dee3-3258-553a-b65d-f4bddc6cd691",
+     "author_name": "Daniela V.",
+     "rating": 5,
+     "comment": "El lugar estaba impecable y quedó espacio de sobra para bailar.",
+     "reviewed_on": "2026-08-02"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "bf8466eb-e31a-584a-a89f-96e00b87d5d2",
+     "check_type": "identidad",
+     "checked_on": "2026-09-18",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "49ec89bd-2939-51cf-859c-b6217c2c922e",
+     "check_type": "visita",
+     "checked_on": "2026-09-23",
+     "notes": "Visita a las instalaciones o a un montaje reciente (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-terraza-san-antonio",
+   "name": "Terraza San Antonio",
+   "description": "Terraza con vista a la ciudad para reuniones íntimas.",
+   "neighborhood": "San Antonio",
+   "municipality": "Cali",
+   "phone": "3000000003",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.451,
+   "longitude": -76.542,
+   "featured": false,
+   "images": [
+    {
+     "id": "837d0062-1713-5f43-995a-00c6162ad642",
+     "url": "https://picsum.photos/seed/terraza-san-antonio-1/800/600",
+     "alt_text": "Foto 1 de Terraza San Antonio (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "f842e719-47f2-5448-a8cb-724360fdc4e5",
+     "url": "https://picsum.photos/seed/terraza-san-antonio-2/800/600",
+     "alt_text": "Foto 2 de Terraza San Antonio (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "bea7283c-ef2d-593b-93a3-b10cff90c832",
+     "url": "https://picsum.photos/seed/terraza-san-antonio-3/800/600",
+     "alt_text": "Foto 3 de Terraza San Antonio (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "455b561f-4b77-504f-a625-4c41304fa760",
+     "url": "https://picsum.photos/seed/terraza-san-antonio-4/800/600",
+     "alt_text": "Foto 4 de Terraza San Antonio (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "a25a7656-b607-5172-86eb-978f2ad2e62f",
+     "author_name": "Laura G.",
+     "rating": 3,
+     "comment": "Bonito sitio, aunque el parqueadero se llenó rápido.",
+     "reviewed_on": "2026-06-23"
+    },
+    {
+     "id": "ec0e4813-a28c-5ee1-831c-f5b618c196f7",
+     "author_name": "Andrés M.",
+     "rating": 5,
+     "comment": "Cumplió con lo acordado y los invitados quedaron contentos.",
+     "reviewed_on": "2026-07-10"
+    },
+    {
+     "id": "f27e5081-7c72-5dcd-9438-abdfe12fd296",
+     "author_name": "Daniela V.",
+     "rating": 4,
+     "comment": "El lugar estaba impecable y quedó espacio de sobra para bailar.",
+     "reviewed_on": "2026-07-27"
+    },
+    {
+     "id": "fa46e2cc-787c-5c87-a458-351f8ce69502",
+     "author_name": "Julián C.",
+     "rating": 4,
+     "comment": "Muy buena atención del equipo y el montaje fue puntual.",
+     "reviewed_on": "2026-08-13"
+    },
+    {
+     "id": "287314e8-b16e-5e83-beb1-605724e53d88",
+     "author_name": "Paola S.",
+     "rating": 5,
+     "comment": "Bonito sitio, aunque el parqueadero se llenó rápido.",
+     "reviewed_on": "2026-08-30"
+    }
+   ],
+   "verifications": []
+  },
+  {
+   "id": "prv-salon-comunal-versalles",
+   "name": "Salón Comunal Versalles",
+   "description": "Salón sencillo y económico con cocina y mobiliario básico.",
+   "neighborhood": "Versalles",
+   "municipality": "Cali",
+   "phone": "3000000004",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.458,
+   "longitude": -76.534,
+   "featured": false,
+   "images": [
+    {
+     "id": "9464b4cd-15a1-563b-ad7a-5af15165895f",
+     "url": "https://picsum.photos/seed/salon-comunal-versalles-1/800/600",
+     "alt_text": "Foto 1 de Salón Comunal Versalles (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "78317b30-3c8f-51a0-a3a4-3e526a5e6211",
+     "url": "https://picsum.photos/seed/salon-comunal-versalles-2/800/600",
+     "alt_text": "Foto 2 de Salón Comunal Versalles (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "d8122d60-6464-592f-9de7-97027864de45",
+     "url": "https://picsum.photos/seed/salon-comunal-versalles-3/800/600",
+     "alt_text": "Foto 3 de Salón Comunal Versalles (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "736ead41-c1d9-5dea-a1a7-be4e2427a1d9",
+     "url": "https://picsum.photos/seed/salon-comunal-versalles-4/800/600",
+     "alt_text": "Foto 4 de Salón Comunal Versalles (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "14be751e-f625-577d-99f8-b38dbea6d8e5",
+     "author_name": "Andrés M.",
+     "rating": 4,
+     "comment": "Cumplió con lo acordado y los invitados quedaron contentos.",
+     "reviewed_on": "2026-07-04"
+    },
+    {
+     "id": "8e83b2ca-dc0e-5eae-8a48-00b1b0530709",
+     "author_name": "Daniela V.",
+     "rating": 4,
+     "comment": "La ambientación se veía tal cual las fotos.",
+     "reviewed_on": "2026-07-21"
+    },
+    {
+     "id": "a9a6c03e-8677-5e96-a44b-76581acec81f",
+     "author_name": "Julián C.",
+     "rating": 5,
+     "comment": "Muy buena atención del equipo y el montaje fue puntual.",
+     "reviewed_on": "2026-08-07"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "8c0bdf53-919c-5658-a5af-5adc794e0d88",
+     "check_type": "identidad",
+     "checked_on": "2026-09-24",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "420f199e-632c-53ef-8738-3a3900fcf8c9",
+     "check_type": "referencias",
+     "checked_on": "2026-09-29",
+     "notes": "Dos referencias de clientes anteriores consultadas (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-hacienda-el-trapiche",
+   "name": "Hacienda El Trapiche",
+   "description": "Hacienda para grandes celebraciones con servicio de banquete propio.",
+   "neighborhood": "Potrerito",
+   "municipality": "Jamundí",
+   "phone": "3000000005",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.262,
+   "longitude": -76.545,
+   "featured": false,
+   "images": [
+    {
+     "id": "7eb05ebc-b50e-52d5-96ff-d4880cb58d37",
+     "url": "https://picsum.photos/seed/hacienda-el-trapiche-1/800/600",
+     "alt_text": "Foto 1 de Hacienda El Trapiche (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "032168dd-0c93-568b-8837-411d6f6f3dc5",
+     "url": "https://picsum.photos/seed/hacienda-el-trapiche-2/800/600",
+     "alt_text": "Foto 2 de Hacienda El Trapiche (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "16c837cb-f62b-5160-ac74-da2bb320e8b7",
+     "url": "https://picsum.photos/seed/hacienda-el-trapiche-3/800/600",
+     "alt_text": "Foto 3 de Hacienda El Trapiche (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "ad80feea-8b92-500f-8342-5ee2ffb57fe0",
+     "url": "https://picsum.photos/seed/hacienda-el-trapiche-4/800/600",
+     "alt_text": "Foto 4 de Hacienda El Trapiche (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "26908e18-cb2d-5da7-b3ff-c3e38b5b4077",
+     "author_name": "Daniela V.",
+     "rating": 5,
+     "comment": "El lugar estaba impecable y quedó espacio de sobra para bailar.",
+     "reviewed_on": "2026-07-15"
+    },
+    {
+     "id": "ffe9733d-be3f-5594-afb4-b4646f17b173",
+     "author_name": "Julián C.",
+     "rating": 3,
+     "comment": "Buen sabor y buena presentación; el servicio fue amable.",
+     "reviewed_on": "2026-08-01"
+    },
+    {
+     "id": "26e4b0ce-89e9-5abc-b974-352d0e7352e7",
+     "author_name": "Paola S.",
+     "rating": 5,
+     "comment": "Bonito sitio, aunque el parqueadero se llenó rápido.",
+     "reviewed_on": "2026-08-18"
+    },
+    {
+     "id": "67038d09-dbcd-5b7c-bcb9-27cde33bfa09",
+     "author_name": "Santiago H.",
+     "rating": 4,
+     "comment": "Cumplieron con la hora y el menú pactado.",
+     "reviewed_on": "2026-09-04"
+    }
+   ],
+   "verifications": []
+  },
+  {
+   "id": "prv-sabor-valluno",
+   "name": "Sabor Valluno Catering",
+   "description": "Catering de cocina regional con menús para todo tipo de evento.",
+   "neighborhood": "Granada",
+   "municipality": "Cali",
+   "phone": "3000000006",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.457,
+   "longitude": -76.536,
+   "featured": true,
+   "images": [
+    {
+     "id": "425e889c-ccc2-5ad9-807e-1df6b74efaa5",
+     "url": "https://picsum.photos/seed/sabor-valluno-1/800/600",
+     "alt_text": "Foto 1 de Sabor Valluno Catering (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "4f9319d6-db54-57dd-ba32-92a42ff7a21b",
+     "url": "https://picsum.photos/seed/sabor-valluno-2/800/600",
+     "alt_text": "Foto 2 de Sabor Valluno Catering (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "c7633616-44b1-5aa7-b140-477d6aeeb800",
+     "url": "https://picsum.photos/seed/sabor-valluno-3/800/600",
+     "alt_text": "Foto 3 de Sabor Valluno Catering (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "a05f6ca3-408c-5f71-bae3-1be95a88dee4",
+     "url": "https://picsum.photos/seed/sabor-valluno-4/800/600",
+     "alt_text": "Foto 4 de Sabor Valluno Catering (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "6f79f6e6-979d-5f5c-8200-01c0cce5b9a0",
+     "author_name": "Julián C.",
+     "rating": 5,
+     "comment": "Buen sabor y buena presentación; el servicio fue amable.",
+     "reviewed_on": "2026-07-26"
+    },
+    {
+     "id": "cfc334cb-6dbb-5dd7-9e30-9ff9c25e20af",
+     "author_name": "Paola S.",
+     "rating": 4,
+     "comment": "Porciones generosas por el precio.",
+     "reviewed_on": "2026-08-12"
+    },
+    {
+     "id": "bc11c1e3-bad6-556c-800d-3696a1330edb",
+     "author_name": "Santiago H.",
+     "rating": 5,
+     "comment": "Cumplieron con la hora y el menú pactado.",
+     "reviewed_on": "2026-08-29"
+    },
+    {
+     "id": "aaaf203f-1a07-5986-a0d8-649f007a0b68",
+     "author_name": "Valentina O.",
+     "rating": 4,
+     "comment": "La comida llegó caliente y alcanzó para todos.",
+     "reviewed_on": "2026-09-15"
+    },
+    {
+     "id": "02cc0c27-9ab3-560a-bb5e-bfe497a01fea",
+     "author_name": "Camilo T.",
+     "rating": 3,
+     "comment": "Buen sabor y buena presentación; el servicio fue amable.",
+     "reviewed_on": "2026-06-04"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "a2b09058-6b5d-5231-9577-eb6048ad7af4",
+     "check_type": "identidad",
+     "checked_on": "2026-09-30",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "9cea9b3c-1c26-5daa-9a81-ede580fe5651",
+     "check_type": "registro_mercantil",
+     "checked_on": "2026-10-05",
+     "notes": "Registro mercantil vigente revisado (dato de ejemplo)."
+    },
+    {
+     "id": "184188bb-1ca2-5956-bc5f-2a2c77d06b0f",
+     "check_type": "referencias",
+     "checked_on": "2026-10-10",
+     "notes": "Dos referencias de clientes anteriores consultadas (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-banquetes-la-sultana",
+   "name": "Banquetes La Sultana",
+   "description": "Banquetes de mesa servida y estaciones para bodas y quince años.",
+   "neighborhood": "Tequendama",
+   "municipality": "Cali",
+   "phone": "3000000007",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.428,
+   "longitude": -76.546,
+   "featured": false,
+   "images": [
+    {
+     "id": "46ddd424-314f-5422-b961-d2dd1ada3e45",
+     "url": "https://picsum.photos/seed/banquetes-la-sultana-1/800/600",
+     "alt_text": "Foto 1 de Banquetes La Sultana (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "c5b0b5a0-c896-506e-92b4-04cc84239f85",
+     "url": "https://picsum.photos/seed/banquetes-la-sultana-2/800/600",
+     "alt_text": "Foto 2 de Banquetes La Sultana (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "e461d323-db58-5c51-98b9-da7c98f80c3a",
+     "url": "https://picsum.photos/seed/banquetes-la-sultana-3/800/600",
+     "alt_text": "Foto 3 de Banquetes La Sultana (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "9decf7d1-59e9-5a82-aa4c-d0e354c4fe25",
+     "url": "https://picsum.photos/seed/banquetes-la-sultana-4/800/600",
+     "alt_text": "Foto 4 de Banquetes La Sultana (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "2a1f6888-9d77-5e7a-a219-1f11bb3e8f7e",
+     "author_name": "Paola S.",
+     "rating": 5,
+     "comment": "Porciones generosas por el precio.",
+     "reviewed_on": "2026-08-06"
+    },
+    {
+     "id": "9dfdb976-e188-5743-b0a5-bf4f725ab999",
+     "author_name": "Santiago H.",
+     "rating": 4,
+     "comment": "Cumplieron con la hora y el menú pactado.",
+     "reviewed_on": "2026-08-23"
+    },
+    {
+     "id": "8df51ce9-b5fe-5243-b5e8-5b5415034b14",
+     "author_name": "Valentina O.",
+     "rating": 3,
+     "comment": "La comida llegó caliente y alcanzó para todos.",
+     "reviewed_on": "2026-09-09"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "ca741a12-2fad-51a5-b64d-3e1fc59613b3",
+     "check_type": "identidad",
+     "checked_on": "2026-10-03",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "dd485110-f3ad-54c6-a265-e47ae87aedd1",
+     "check_type": "registro_mercantil",
+     "checked_on": "2026-10-08",
+     "notes": "Registro mercantil vigente revisado (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-fogon-del-pacifico",
+   "name": "Fogón del Pacífico",
+   "description": "Cocina del Pacífico colombiano para eventos familiares.",
+   "neighborhood": "Menga",
+   "municipality": "Cali",
+   "phone": "3000000008",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.484,
+   "longitude": -76.512,
+   "featured": false,
+   "images": [
+    {
+     "id": "c4899137-e8b9-5472-a72e-1f1d388bcf1f",
+     "url": "https://picsum.photos/seed/fogon-del-pacifico-1/800/600",
+     "alt_text": "Foto 1 de Fogón del Pacífico (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "2fc4258b-9f02-5718-96e9-9eca02af8166",
+     "url": "https://picsum.photos/seed/fogon-del-pacifico-2/800/600",
+     "alt_text": "Foto 2 de Fogón del Pacífico (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "62e48b89-db75-59ad-8128-e3ca2256a305",
+     "url": "https://picsum.photos/seed/fogon-del-pacifico-3/800/600",
+     "alt_text": "Foto 3 de Fogón del Pacífico (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "756cfe17-c800-5ac1-b251-1401645cbc39",
+     "url": "https://picsum.photos/seed/fogon-del-pacifico-4/800/600",
+     "alt_text": "Foto 4 de Fogón del Pacífico (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "6b1a6bb0-3dc5-5787-a7b1-6a77f87c8816",
+     "author_name": "Santiago H.",
+     "rating": 3,
+     "comment": "Cumplieron con la hora y el menú pactado.",
+     "reviewed_on": "2026-08-17"
+    },
+    {
+     "id": "b734dbc4-5cc6-51b1-8bbb-744d87850254",
+     "author_name": "Valentina O.",
+     "rating": 5,
+     "comment": "La comida llegó caliente y alcanzó para todos.",
+     "reviewed_on": "2026-09-03"
+    },
+    {
+     "id": "4b933832-3e70-5a5a-9c83-fd9527c6e98c",
+     "author_name": "Camilo T.",
+     "rating": 4,
+     "comment": "Buen sabor y buena presentación; el servicio fue amable.",
+     "reviewed_on": "2026-09-20"
+    },
+    {
+     "id": "e15f7639-ad4d-58d4-921a-30856d442b3c",
+     "author_name": "María P.",
+     "rating": 4,
+     "comment": "Porciones generosas por el precio.",
+     "reviewed_on": "2026-06-09"
+    }
+   ],
+   "verifications": []
+  },
+  {
+   "id": "prv-flor-de-cana",
+   "name": "Decoraciones Flor de Caña",
+   "description": "Decoración floral y de ambientación para todo tipo de evento.",
+   "neighborhood": "Normandía",
+   "municipality": "Cali",
+   "phone": "3000000009",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.441,
+   "longitude": -76.548,
+   "featured": false,
+   "images": [
+    {
+     "id": "b4bc9977-ebeb-517f-9897-4639494d7b6e",
+     "url": "https://picsum.photos/seed/flor-de-cana-1/800/600",
+     "alt_text": "Foto 1 de Decoraciones Flor de Caña (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "1c8ecd99-a742-5808-91bf-005a014a39cb",
+     "url": "https://picsum.photos/seed/flor-de-cana-2/800/600",
+     "alt_text": "Foto 2 de Decoraciones Flor de Caña (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "951ea062-07d3-5356-b380-0da80ff83513",
+     "url": "https://picsum.photos/seed/flor-de-cana-3/800/600",
+     "alt_text": "Foto 3 de Decoraciones Flor de Caña (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "432ffb31-a827-5060-9af9-594831f9a177",
+     "url": "https://picsum.photos/seed/flor-de-cana-4/800/600",
+     "alt_text": "Foto 4 de Decoraciones Flor de Caña (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "994e8cba-a4ca-5d92-96b9-7e130d21b51e",
+     "author_name": "Valentina O.",
+     "rating": 4,
+     "comment": "La ambientación se veía tal cual las fotos.",
+     "reviewed_on": "2026-08-28"
+    },
+    {
+     "id": "65ae9456-7483-5b3c-9a1f-cf7aa891117c",
+     "author_name": "Camilo T.",
+     "rating": 4,
+     "comment": "Montaron todo a tiempo y con mucho detalle.",
+     "reviewed_on": "2026-09-14"
+    },
+    {
+     "id": "a99aaec4-f35d-599e-bfdf-ec9c10877516",
+     "author_name": "María P.",
+     "rating": 5,
+     "comment": "Buen diseño, un poco corto el tiempo de desmontaje.",
+     "reviewed_on": "2026-06-03"
+    },
+    {
+     "id": "16f342c1-14ba-59e6-b4fa-c180ae188e2a",
+     "author_name": "Carlos R.",
+     "rating": 3,
+     "comment": "Muy atentos a lo que pedimos.",
+     "reviewed_on": "2026-06-20"
+    },
+    {
+     "id": "4d47a853-723e-58d0-bf06-a4659a993a22",
+     "author_name": "Laura G.",
+     "rating": 5,
+     "comment": "La ambientación se veía tal cual las fotos.",
+     "reviewed_on": "2026-07-07"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "49bca82a-412d-5dc4-b1cd-27ef26a1204a",
+     "check_type": "identidad",
+     "checked_on": "2026-10-09",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "3cee14ca-4b89-5df4-a645-83f33f0781bd",
+     "check_type": "visita",
+     "checked_on": "2026-10-14",
+     "notes": "Visita a las instalaciones o a un montaje reciente (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-atelier-del-evento",
+   "name": "Atelier del Evento",
+   "description": "Diseño de ambientación para bodas y quince años con montaje completo.",
+   "neighborhood": "El Peñón",
+   "municipality": "Cali",
+   "phone": "3000000010",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.452,
+   "longitude": -76.543,
+   "featured": true,
+   "images": [
+    {
+     "id": "4bcad974-c7ad-5a4c-a9f0-9d53a1b8fc7b",
+     "url": "https://picsum.photos/seed/atelier-del-evento-1/800/600",
+     "alt_text": "Foto 1 de Atelier del Evento (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "ae16fd8c-962b-59b3-91de-4ba9baa0b3b2",
+     "url": "https://picsum.photos/seed/atelier-del-evento-2/800/600",
+     "alt_text": "Foto 2 de Atelier del Evento (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "05ac5f0d-30dd-50be-90c1-cba2ad1386bf",
+     "url": "https://picsum.photos/seed/atelier-del-evento-3/800/600",
+     "alt_text": "Foto 3 de Atelier del Evento (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "1a5f12b2-a1fa-53b9-b603-0b66b9d74bd8",
+     "url": "https://picsum.photos/seed/atelier-del-evento-4/800/600",
+     "alt_text": "Foto 4 de Atelier del Evento (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "a8729173-df0b-5c1b-8f42-fc3ba9a86e27",
+     "author_name": "Camilo T.",
+     "rating": 5,
+     "comment": "Montaron todo a tiempo y con mucho detalle.",
+     "reviewed_on": "2026-09-08"
+    },
+    {
+     "id": "3308f488-62f4-5e5a-a352-67b8b3c853f7",
+     "author_name": "María P.",
+     "rating": 3,
+     "comment": "Buen diseño, un poco corto el tiempo de desmontaje.",
+     "reviewed_on": "2026-09-25"
+    },
+    {
+     "id": "783565b6-b7d8-539a-ac56-d379f09fbda1",
+     "author_name": "Carlos R.",
+     "rating": 5,
+     "comment": "Muy atentos a lo que pedimos.",
+     "reviewed_on": "2026-06-14"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "b320a149-2e92-5261-9db9-c748fe2f7509",
+     "check_type": "identidad",
+     "checked_on": "2026-10-12",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "e23f6f31-974d-5331-af04-5e974608aa9d",
+     "check_type": "registro_mercantil",
+     "checked_on": "2026-10-17",
+     "notes": "Registro mercantil vigente revisado (dato de ejemplo)."
+    },
+    {
+     "id": "508d214d-eef3-5ea1-abc5-1f50fe2e3a08",
+     "check_type": "visita",
+     "checked_on": "2026-10-22",
+     "notes": "Visita a las instalaciones o a un montaje reciente (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-globos-y-fiesta",
+   "name": "Globos y Fiesta",
+   "description": "Decoración temática y con globos para fiestas de cumpleaños.",
+   "neighborhood": "Santa Rita",
+   "municipality": "Cali",
+   "phone": "3000000011",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.436,
+   "longitude": -76.552,
+   "featured": false,
+   "images": [
+    {
+     "id": "0c79bb04-5a52-5791-8333-7bd4657fb602",
+     "url": "https://picsum.photos/seed/globos-y-fiesta-1/800/600",
+     "alt_text": "Foto 1 de Globos y Fiesta (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "91975c32-53a8-51db-93c9-6b982d1ef1e5",
+     "url": "https://picsum.photos/seed/globos-y-fiesta-2/800/600",
+     "alt_text": "Foto 2 de Globos y Fiesta (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "72125bf5-9c75-5c5b-af28-8957810d158a",
+     "url": "https://picsum.photos/seed/globos-y-fiesta-3/800/600",
+     "alt_text": "Foto 3 de Globos y Fiesta (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "8548340d-a039-54a4-9507-872ce4801d32",
+     "url": "https://picsum.photos/seed/globos-y-fiesta-4/800/600",
+     "alt_text": "Foto 4 de Globos y Fiesta (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "d963e857-85e6-54f3-b37f-49bc238c218e",
+     "author_name": "María P.",
+     "rating": 5,
+     "comment": "Buen diseño, un poco corto el tiempo de desmontaje.",
+     "reviewed_on": "2026-09-19"
+    },
+    {
+     "id": "4f667720-4851-52e8-b0be-1ac0590ee0f8",
+     "author_name": "Carlos R.",
+     "rating": 4,
+     "comment": "Muy atentos a lo que pedimos.",
+     "reviewed_on": "2026-06-08"
+    },
+    {
+     "id": "208ca8f1-17f7-57a1-9286-c6ccc5a03d0d",
+     "author_name": "Laura G.",
+     "rating": 5,
+     "comment": "La ambientación se veía tal cual las fotos.",
+     "reviewed_on": "2026-06-25"
+    },
+    {
+     "id": "f9ec38c5-5658-54ec-9e10-f140a9a75ebd",
+     "author_name": "Andrés M.",
+     "rating": 4,
+     "comment": "Montaron todo a tiempo y con mucho detalle.",
+     "reviewed_on": "2026-07-12"
+    }
+   ],
+   "verifications": []
+  },
+  {
+   "id": "prv-dj-ritmo-sur",
+   "name": "DJ Ritmo Sur",
+   "description": "Servicio de DJ con sonido e iluminación básica.",
+   "neighborhood": "Chipichape",
+   "municipality": "Cali",
+   "phone": "3000000012",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.473,
+   "longitude": -76.527,
+   "featured": false,
+   "images": [
+    {
+     "id": "3973a3a8-9fdb-510d-996b-a364336ca59b",
+     "url": "https://picsum.photos/seed/dj-ritmo-sur-1/800/600",
+     "alt_text": "Foto 1 de DJ Ritmo Sur (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "28f33696-1c41-588d-8fa5-3e48c2d75cb2",
+     "url": "https://picsum.photos/seed/dj-ritmo-sur-2/800/600",
+     "alt_text": "Foto 2 de DJ Ritmo Sur (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "3ce2b0ff-f4dc-59c9-a017-8f3826eabec0",
+     "url": "https://picsum.photos/seed/dj-ritmo-sur-3/800/600",
+     "alt_text": "Foto 3 de DJ Ritmo Sur (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "b6e74b19-97a4-5b8d-8696-dc0e93cf1d11",
+     "url": "https://picsum.photos/seed/dj-ritmo-sur-4/800/600",
+     "alt_text": "Foto 4 de DJ Ritmo Sur (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "7ddb3cde-380e-5f30-8851-ffdf9b46667a",
+     "author_name": "Carlos R.",
+     "rating": 5,
+     "comment": "Repertorio variado y buen manejo del público.",
+     "reviewed_on": "2026-06-02"
+    },
+    {
+     "id": "cc4a4d0f-e99a-59e9-a822-6a982d06c1cd",
+     "author_name": "Laura G.",
+     "rating": 4,
+     "comment": "Mantuvieron la pista llena toda la noche.",
+     "reviewed_on": "2026-06-19"
+    },
+    {
+     "id": "aa2b7ecf-d027-51d9-a475-a18dc8760d28",
+     "author_name": "Andrés M.",
+     "rating": 3,
+     "comment": "Puntuales y con buen sonido.",
+     "reviewed_on": "2026-07-06"
+    },
+    {
+     "id": "c21446fd-b920-5d53-8d92-00f1c4bcf5ab",
+     "author_name": "Daniela V.",
+     "rating": 5,
+     "comment": "Los niños la pasaron muy bien.",
+     "reviewed_on": "2026-07-23"
+    },
+    {
+     "id": "8ca86592-e589-513b-90a3-78403d5a5777",
+     "author_name": "Julián C.",
+     "rating": 4,
+     "comment": "Repertorio variado y buen manejo del público.",
+     "reviewed_on": "2026-08-09"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "7d55c1af-4ab4-5e6d-9f25-e56d962f5769",
+     "check_type": "identidad",
+     "checked_on": "2026-10-18",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "f330857a-df64-5803-84b2-c80b511e988b",
+     "check_type": "referencias",
+     "checked_on": "2026-10-23",
+     "notes": "Dos referencias de clientes anteriores consultadas (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-orquesta-canaveral",
+   "name": "Orquesta Cañaveral",
+   "description": "Orquesta en vivo de música tropical y popular.",
+   "neighborhood": "Cañasgordas",
+   "municipality": "Cali",
+   "phone": "3000000013",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.355,
+   "longitude": -76.555,
+   "featured": true,
+   "images": [
+    {
+     "id": "e1e4ab6d-f93e-595e-9381-cf0835757b79",
+     "url": "https://picsum.photos/seed/orquesta-canaveral-1/800/600",
+     "alt_text": "Foto 1 de Orquesta Cañaveral (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "3c1f5e8d-e592-5bb2-bf07-13f928d2ef46",
+     "url": "https://picsum.photos/seed/orquesta-canaveral-2/800/600",
+     "alt_text": "Foto 2 de Orquesta Cañaveral (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "ff477fcd-9163-5951-b10f-cce56cfc0809",
+     "url": "https://picsum.photos/seed/orquesta-canaveral-3/800/600",
+     "alt_text": "Foto 3 de Orquesta Cañaveral (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "162af435-6c8e-5850-a0ff-fd3a934c31c6",
+     "url": "https://picsum.photos/seed/orquesta-canaveral-4/800/600",
+     "alt_text": "Foto 4 de Orquesta Cañaveral (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "d8809638-be6a-5ea3-b848-f88f29ae556a",
+     "author_name": "Laura G.",
+     "rating": 3,
+     "comment": "Mantuvieron la pista llena toda la noche.",
+     "reviewed_on": "2026-06-13"
+    },
+    {
+     "id": "9801b308-fa7d-5af0-974f-a55ef206a426",
+     "author_name": "Andrés M.",
+     "rating": 5,
+     "comment": "Puntuales y con buen sonido.",
+     "reviewed_on": "2026-06-30"
+    },
+    {
+     "id": "dcc19d9b-1d59-55d2-a3de-2c9b1ca96135",
+     "author_name": "Daniela V.",
+     "rating": 4,
+     "comment": "Los niños la pasaron muy bien.",
+     "reviewed_on": "2026-07-17"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "43f003dd-8a93-5bf9-b1d4-f7b0321cbb01",
+     "check_type": "identidad",
+     "checked_on": "2026-10-21",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "c103e25a-1412-5ec1-91a7-7943b421c32f",
+     "check_type": "registro_mercantil",
+     "checked_on": "2026-10-26",
+     "notes": "Registro mercantil vigente revisado (dato de ejemplo)."
+    },
+    {
+     "id": "f5b9d8e7-b8fb-5193-913c-933cfaf712b2",
+     "check_type": "referencias",
+     "checked_on": "2026-09-16",
+     "notes": "Dos referencias de clientes anteriores consultadas (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-animacion-pelusa",
+   "name": "Animación Pelusa",
+   "description": "Recreación y animación para eventos infantiles y juveniles.",
+   "neighborhood": "Limonar",
+   "municipality": "Cali",
+   "phone": "3000000014",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.39,
+   "longitude": -76.538,
+   "featured": true,
+   "images": [
+    {
+     "id": "1512b7d6-2727-51d7-b809-93fb56c805ce",
+     "url": "https://picsum.photos/seed/animacion-pelusa-1/800/600",
+     "alt_text": "Foto 1 de Animación Pelusa (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "ef04dc7b-c565-515a-8a32-21afa43f81ce",
+     "url": "https://picsum.photos/seed/animacion-pelusa-2/800/600",
+     "alt_text": "Foto 2 de Animación Pelusa (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "075da491-5016-54d0-bf0e-1d21ce20bafa",
+     "url": "https://picsum.photos/seed/animacion-pelusa-3/800/600",
+     "alt_text": "Foto 3 de Animación Pelusa (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "1bc35edc-9f99-5526-8256-04d30ac88bd4",
+     "url": "https://picsum.photos/seed/animacion-pelusa-4/800/600",
+     "alt_text": "Foto 4 de Animación Pelusa (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "f4972539-5fee-5731-8328-37e0354af6a1",
+     "author_name": "Andrés M.",
+     "rating": 4,
+     "comment": "Puntuales y con buen sonido.",
+     "reviewed_on": "2026-06-24"
+    },
+    {
+     "id": "8dd3a31e-9d82-5475-8bff-96f21f66919f",
+     "author_name": "Daniela V.",
+     "rating": 4,
+     "comment": "Los niños la pasaron muy bien.",
+     "reviewed_on": "2026-07-11"
+    },
+    {
+     "id": "7db13fe5-91b3-5879-83a2-dc47ac6f5684",
+     "author_name": "Julián C.",
+     "rating": 5,
+     "comment": "Repertorio variado y buen manejo del público.",
+     "reviewed_on": "2026-07-28"
+    },
+    {
+     "id": "bc125bf9-bf8d-59a4-bd76-5e191b8cfcf0",
+     "author_name": "Paola S.",
+     "rating": 3,
+     "comment": "Mantuvieron la pista llena toda la noche.",
+     "reviewed_on": "2026-08-14"
+    }
+   ],
+   "verifications": []
+  },
+  {
+   "id": "prv-eventos-yumbo-integral",
+   "name": "Eventos Yumbo Integral",
+   "description": "Proveedor de servicios económicos de espacio, comida y decoración.",
+   "neighborhood": "La Estancia",
+   "municipality": "Yumbo",
+   "phone": "3000000015",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.585,
+   "longitude": -76.495,
+   "featured": false,
+   "images": [
+    {
+     "id": "7912ef4a-bf51-5186-aad8-0bfa013730eb",
+     "url": "https://picsum.photos/seed/eventos-yumbo-integral-1/800/600",
+     "alt_text": "Foto 1 de Eventos Yumbo Integral (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "6e10cc99-7c3c-5c16-a077-2af20e25f394",
+     "url": "https://picsum.photos/seed/eventos-yumbo-integral-2/800/600",
+     "alt_text": "Foto 2 de Eventos Yumbo Integral (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "d20b757f-d7f3-5167-8cca-f23d7e2fb4f3",
+     "url": "https://picsum.photos/seed/eventos-yumbo-integral-3/800/600",
+     "alt_text": "Foto 3 de Eventos Yumbo Integral (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "d85e99de-ddac-5b88-9eaa-12e7419b1f3c",
+     "url": "https://picsum.photos/seed/eventos-yumbo-integral-4/800/600",
+     "alt_text": "Foto 4 de Eventos Yumbo Integral (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "d61a435e-1328-57dd-a71a-eeb4890ae9bf",
+     "author_name": "Daniela V.",
+     "rating": 5,
+     "comment": "Bonito sitio, aunque el parqueadero se llenó rápido.",
+     "reviewed_on": "2026-07-05"
+    },
+    {
+     "id": "d09a8d5c-ac3a-596f-b6b8-d72fd7c6d9c5",
+     "author_name": "Julián C.",
+     "rating": 3,
+     "comment": "Cumplieron con la hora y el menú pactado.",
+     "reviewed_on": "2026-07-22"
+    },
+    {
+     "id": "b4ac906a-ea92-5585-8bc1-8dfebb699cd5",
+     "author_name": "Paola S.",
+     "rating": 5,
+     "comment": "La ambientación se veía tal cual las fotos.",
+     "reviewed_on": "2026-08-08"
+    },
+    {
+     "id": "9aa39a03-5cfe-5730-b625-cb71f2aff48a",
+     "author_name": "Santiago H.",
+     "rating": 4,
+     "comment": "Muy buena atención del equipo y el montaje fue puntual.",
+     "reviewed_on": "2026-08-25"
+    },
+    {
+     "id": "ab0d5a06-bacb-5f22-8309-6b7ec840ac73",
+     "author_name": "Valentina O.",
+     "rating": 5,
+     "comment": "Porciones generosas por el precio.",
+     "reviewed_on": "2026-09-11"
+    }
+   ],
+   "verifications": [
+    {
+     "id": "a98192e6-81a2-5474-803e-03af8b9f38db",
+     "check_type": "identidad",
+     "checked_on": "2026-10-27",
+     "notes": "Documento de identidad del responsable revisado (dato de ejemplo)."
+    },
+    {
+     "id": "0901fc7a-b4f4-580a-8073-aedc9613e4ff",
+     "check_type": "visita",
+     "checked_on": "2026-09-17",
+     "notes": "Visita a las instalaciones o a un montaje reciente (dato de ejemplo)."
+    }
+   ]
+  },
+  {
+   "id": "prv-palmira-fiestas",
+   "name": "Palmira Fiestas",
+   "description": "Salón, banquete y música para celebraciones en Palmira.",
+   "neighborhood": "Zamorano",
+   "municipality": "Palmira",
+   "phone": "3000000016",
+   "email": "contacto@ejemplo.invalid",
+   "latitude": 3.539,
+   "longitude": -76.303,
+   "featured": false,
+   "images": [
+    {
+     "id": "7a7d8f4b-2e4d-59cb-a28e-8a669bb2e743",
+     "url": "https://picsum.photos/seed/palmira-fiestas-1/800/600",
+     "alt_text": "Foto 1 de Palmira Fiestas (imagen de ejemplo)",
+     "position": 1
+    },
+    {
+     "id": "140ffe77-5b1e-519e-8daa-05e8ccba2157",
+     "url": "https://picsum.photos/seed/palmira-fiestas-2/800/600",
+     "alt_text": "Foto 2 de Palmira Fiestas (imagen de ejemplo)",
+     "position": 2
+    },
+    {
+     "id": "ebc990fd-ba72-56de-9bfc-107c35df17e5",
+     "url": "https://picsum.photos/seed/palmira-fiestas-3/800/600",
+     "alt_text": "Foto 3 de Palmira Fiestas (imagen de ejemplo)",
+     "position": 3
+    },
+    {
+     "id": "53ea50f8-6023-5a52-acec-411c2e921d61",
+     "url": "https://picsum.photos/seed/palmira-fiestas-4/800/600",
+     "alt_text": "Foto 4 de Palmira Fiestas (imagen de ejemplo)",
+     "position": 4
+    }
+   ],
+   "reviews": [
+    {
+     "id": "3c095574-6aa8-5806-814d-efa54809369f",
+     "author_name": "Julián C.",
+     "rating": 5,
+     "comment": "Cumplió con lo acordado y los invitados quedaron contentos.",
+     "reviewed_on": "2026-07-16"
+    },
+    {
+     "id": "6175fb9a-3c49-5f9f-bc92-35d04e592c21",
+     "author_name": "Paola S.",
+     "rating": 4,
+     "comment": "La comida llegó caliente y alcanzó para todos.",
+     "reviewed_on": "2026-08-02"
+    },
+    {
+     "id": "9af599c0-8a81-5a0b-9f3c-0fff2dd82c14",
+     "author_name": "Santiago H.",
+     "rating": 5,
+     "comment": "Puntuales y con buen sonido.",
+     "reviewed_on": "2026-08-19"
+    }
+   ],
+   "verifications": []
+  }
+ ],
+ "services": [
+  {
+   "id": "svc-salon-los-guaduales-espa-prem",
+   "provider_id": "prv-salon-los-guaduales",
+   "category": "espacio",
+   "level": "premium",
+   "name": "Salón principal con jardín",
+   "description": "Salón para 80 a 250 invitados con pista de baile, mobiliario y parqueadero.",
+   "price_model": "fijo",
+   "base_price_cop": 3800000,
+   "min_guests": 80,
+   "max_guests": 250,
+   "event_types": [
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-salon-los-guaduales-espa-equi",
+   "provider_id": "prv-salon-los-guaduales",
+   "category": "espacio",
+   "level": "equilibrado",
+   "name": "Salón pequeño",
+   "description": "Salón para 40 a 120 invitados con mobiliario incluido.",
+   "price_model": "fijo",
+   "base_price_cop": 1600000,
+   "min_guests": 40,
+   "max_guests": 120,
+   "event_types": [
+    "cumpleanos",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-casa-quinta-pance-espa-prem",
+   "provider_id": "prv-casa-quinta-pance",
+   "category": "espacio",
+   "level": "premium",
+   "name": "Casa quinta completa",
+   "description": "Casa campestre para 60 a 300 invitados con zona verde y piscina decorativa.",
+   "price_model": "fijo",
+   "base_price_cop": 4500000,
+   "min_guests": 60,
+   "max_guests": 300,
+   "event_types": [
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-casa-quinta-pance-espa-equi",
+   "provider_id": "prv-casa-quinta-pance",
+   "category": "espacio",
+   "level": "equilibrado",
+   "name": "Zona social de la casa quinta",
+   "description": "Kiosco y zona verde para 30 a 150 invitados.",
+   "price_model": "fijo",
+   "base_price_cop": 1900000,
+   "min_guests": 30,
+   "max_guests": 150,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-terraza-san-antonio-espa-equi",
+   "provider_id": "prv-terraza-san-antonio",
+   "category": "espacio",
+   "level": "equilibrado",
+   "name": "Terraza con vista",
+   "description": "Terraza para 25 a 80 invitados con mobiliario básico.",
+   "price_model": "fijo",
+   "base_price_cop": 1200000,
+   "min_guests": 25,
+   "max_guests": 80,
+   "event_types": [
+    "cumpleanos",
+    "boda"
+   ]
+  },
+  {
+   "id": "svc-terraza-san-antonio-espa-ahor",
+   "provider_id": "prv-terraza-san-antonio",
+   "category": "espacio",
+   "level": "ahorro",
+   "name": "Terraza reducida",
+   "description": "Sección de la terraza para 15 a 40 invitados.",
+   "price_model": "fijo",
+   "base_price_cop": 650000,
+   "min_guests": 15,
+   "max_guests": 40,
+   "event_types": [
+    "cumpleanos"
+   ]
+  },
+  {
+   "id": "svc-salon-comunal-versalles-espa-ahor",
+   "provider_id": "prv-salon-comunal-versalles",
+   "category": "espacio",
+   "level": "ahorro",
+   "name": "Salón comunal",
+   "description": "Salón con cocina y mesas para 20 a 100 invitados.",
+   "price_model": "fijo",
+   "base_price_cop": 450000,
+   "min_guests": 20,
+   "max_guests": 100,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-salon-comunal-versalles-deco-ahor",
+   "provider_id": "prv-salon-comunal-versalles",
+   "category": "decoracion",
+   "level": "ahorro",
+   "name": "Decoración sencilla",
+   "description": "Mesas, manteles y adornos básicos.",
+   "price_model": "fijo",
+   "base_price_cop": 300000,
+   "min_guests": 1,
+   "max_guests": 200,
+   "event_types": [
+    "cumpleanos",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-hacienda-el-trapiche-espa-prem",
+   "provider_id": "prv-hacienda-el-trapiche",
+   "category": "espacio",
+   "level": "premium",
+   "name": "Hacienda para grandes eventos",
+   "description": "Hacienda para 50 a 300 invitados con zonas verdes y capilla.",
+   "price_model": "fijo",
+   "base_price_cop": 4200000,
+   "min_guests": 50,
+   "max_guests": 300,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-hacienda-el-trapiche-alim-prem",
+   "provider_id": "prv-hacienda-el-trapiche",
+   "category": "alimentacion",
+   "level": "premium",
+   "name": "Banquete de la hacienda",
+   "description": "Menú de tres tiempos con mesa servida.",
+   "price_model": "por_invitado",
+   "base_price_cop": 55000,
+   "min_guests": 50,
+   "max_guests": 300,
+   "event_types": [
+    "boda"
+   ]
+  },
+  {
+   "id": "svc-sabor-valluno-alim-ahor",
+   "provider_id": "prv-sabor-valluno",
+   "category": "alimentacion",
+   "level": "ahorro",
+   "name": "Menú buffet regional",
+   "description": "Buffet con plato fuerte, acompañamientos y bebida.",
+   "price_model": "por_invitado",
+   "base_price_cop": 14000,
+   "min_guests": 20,
+   "max_guests": 300,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-sabor-valluno-alim-equi",
+   "provider_id": "prv-sabor-valluno",
+   "category": "alimentacion",
+   "level": "equilibrado",
+   "name": "Menú de dos tiempos",
+   "description": "Entrada y plato fuerte servidos a la mesa.",
+   "price_model": "por_invitado",
+   "base_price_cop": 24000,
+   "min_guests": 20,
+   "max_guests": 300,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-banquetes-la-sultana-alim-equi",
+   "provider_id": "prv-banquetes-la-sultana",
+   "category": "alimentacion",
+   "level": "equilibrado",
+   "name": "Banquete de tres tiempos",
+   "description": "Entrada, plato fuerte y postre con servicio de meseros.",
+   "price_model": "por_invitado",
+   "base_price_cop": 30000,
+   "min_guests": 30,
+   "max_guests": 250,
+   "event_types": [
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-banquetes-la-sultana-alim-prem",
+   "provider_id": "prv-banquetes-la-sultana",
+   "category": "alimentacion",
+   "level": "premium",
+   "name": "Banquete de autor",
+   "description": "Menú de autor con estaciones y barra de bebidas.",
+   "price_model": "por_invitado",
+   "base_price_cop": 48000,
+   "min_guests": 30,
+   "max_guests": 250,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-fogon-del-pacifico-alim-ahor",
+   "provider_id": "prv-fogon-del-pacifico",
+   "category": "alimentacion",
+   "level": "ahorro",
+   "name": "Menú del Pacífico económico",
+   "description": "Sancocho o arroz con pollo con bebida.",
+   "price_model": "por_invitado",
+   "base_price_cop": 12000,
+   "min_guests": 20,
+   "max_guests": 150,
+   "event_types": [
+    "cumpleanos",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-fogon-del-pacifico-alim-prem",
+   "provider_id": "prv-fogon-del-pacifico",
+   "category": "alimentacion",
+   "level": "premium",
+   "name": "Menú del Pacífico especial",
+   "description": "Mariscos y platos típicos con servicio a la mesa.",
+   "price_model": "por_invitado",
+   "base_price_cop": 42000,
+   "min_guests": 20,
+   "max_guests": 150,
+   "event_types": [
+    "cumpleanos"
+   ]
+  },
+  {
+   "id": "svc-flor-de-cana-deco-ahor",
+   "provider_id": "prv-flor-de-cana",
+   "category": "decoracion",
+   "level": "ahorro",
+   "name": "Ambientación básica",
+   "description": "Centros de mesa y arreglos florales sencillos.",
+   "price_model": "fijo",
+   "base_price_cop": 350000,
+   "min_guests": 1,
+   "max_guests": 300,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-flor-de-cana-deco-equi",
+   "provider_id": "prv-flor-de-cana",
+   "category": "decoracion",
+   "level": "equilibrado",
+   "name": "Ambientación floral",
+   "description": "Arreglos florales, arco de entrada y mesa principal.",
+   "price_model": "fijo",
+   "base_price_cop": 800000,
+   "min_guests": 1,
+   "max_guests": 300,
+   "event_types": [
+    "cumpleanos",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-atelier-del-evento-deco-equi",
+   "provider_id": "prv-atelier-del-evento",
+   "category": "decoracion",
+   "level": "equilibrado",
+   "name": "Ambientación de diseño",
+   "description": "Montaje temático con iluminación decorativa.",
+   "price_model": "fijo",
+   "base_price_cop": 1100000,
+   "min_guests": 1,
+   "max_guests": 300,
+   "event_types": [
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-atelier-del-evento-deco-prem",
+   "provider_id": "prv-atelier-del-evento",
+   "category": "decoracion",
+   "level": "premium",
+   "name": "Ambientación de lujo",
+   "description": "Diseño completo con flores, iluminación y mobiliario decorativo.",
+   "price_model": "fijo",
+   "base_price_cop": 2400000,
+   "min_guests": 1,
+   "max_guests": 300,
+   "event_types": [
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-globos-y-fiesta-deco-ahor",
+   "provider_id": "prv-globos-y-fiesta",
+   "category": "decoracion",
+   "level": "ahorro",
+   "name": "Globos básicos",
+   "description": "Arco y ramos de globos.",
+   "price_model": "fijo",
+   "base_price_cop": 260000,
+   "min_guests": 1,
+   "max_guests": 150,
+   "event_types": [
+    "cumpleanos"
+   ]
+  },
+  {
+   "id": "svc-globos-y-fiesta-deco-equi",
+   "provider_id": "prv-globos-y-fiesta",
+   "category": "decoracion",
+   "level": "equilibrado",
+   "name": "Tema infantil",
+   "description": "Decoración temática con globos y mesa de dulces.",
+   "price_model": "fijo",
+   "base_price_cop": 700000,
+   "min_guests": 1,
+   "max_guests": 150,
+   "event_types": [
+    "cumpleanos"
+   ]
+  },
+  {
+   "id": "svc-globos-y-fiesta-deco-prem",
+   "provider_id": "prv-globos-y-fiesta",
+   "category": "decoracion",
+   "level": "premium",
+   "name": "Tema infantil completo",
+   "description": "Decoración temática completa con personajes y backing.",
+   "price_model": "fijo",
+   "base_price_cop": 1600000,
+   "min_guests": 1,
+   "max_guests": 150,
+   "event_types": [
+    "cumpleanos"
+   ]
+  },
+  {
+   "id": "svc-dj-ritmo-sur-entr-ahor",
+   "provider_id": "prv-dj-ritmo-sur",
+   "category": "entretenimiento",
+   "level": "ahorro",
+   "name": "DJ 3 horas",
+   "description": "DJ con sonido básico durante tres horas.",
+   "price_model": "fijo",
+   "base_price_cop": 300000,
+   "min_guests": 1,
+   "max_guests": 300,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-dj-ritmo-sur-entr-equi",
+   "provider_id": "prv-dj-ritmo-sur",
+   "category": "entretenimiento",
+   "level": "equilibrado",
+   "name": "DJ 5 horas con luces",
+   "description": "DJ con sonido e iluminación durante cinco horas.",
+   "price_model": "fijo",
+   "base_price_cop": 700000,
+   "min_guests": 1,
+   "max_guests": 300,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-orquesta-canaveral-entr-prem",
+   "provider_id": "prv-orquesta-canaveral",
+   "category": "entretenimiento",
+   "level": "premium",
+   "name": "Orquesta en vivo",
+   "description": "Orquesta de ocho músicos durante cuatro horas.",
+   "price_model": "fijo",
+   "base_price_cop": 1900000,
+   "min_guests": 1,
+   "max_guests": 500,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-orquesta-canaveral-entr-equi",
+   "provider_id": "prv-orquesta-canaveral",
+   "category": "entretenimiento",
+   "level": "equilibrado",
+   "name": "Trío musical",
+   "description": "Trío de música en vivo durante tres horas.",
+   "price_model": "fijo",
+   "base_price_cop": 900000,
+   "min_guests": 1,
+   "max_guests": 200,
+   "event_types": [
+    "boda"
+   ]
+  },
+  {
+   "id": "svc-animacion-pelusa-entr-ahor",
+   "provider_id": "prv-animacion-pelusa",
+   "category": "entretenimiento",
+   "level": "ahorro",
+   "name": "Recreación infantil básica",
+   "description": "Dos recreadores durante dos horas.",
+   "price_model": "fijo",
+   "base_price_cop": 220000,
+   "min_guests": 1,
+   "max_guests": 60,
+   "event_types": [
+    "cumpleanos"
+   ]
+  },
+  {
+   "id": "svc-animacion-pelusa-entr-equi",
+   "provider_id": "prv-animacion-pelusa",
+   "category": "entretenimiento",
+   "level": "equilibrado",
+   "name": "Show de animación",
+   "description": "Show con juegos, pintacaritas y maquillaje artístico.",
+   "price_model": "fijo",
+   "base_price_cop": 520000,
+   "min_guests": 1,
+   "max_guests": 100,
+   "event_types": [
+    "cumpleanos",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-eventos-yumbo-integral-espa-ahor",
+   "provider_id": "prv-eventos-yumbo-integral",
+   "category": "espacio",
+   "level": "ahorro",
+   "name": "Salón de eventos Yumbo",
+   "description": "Salón para 20 a 180 invitados con mobiliario básico.",
+   "price_model": "fijo",
+   "base_price_cop": 500000,
+   "min_guests": 20,
+   "max_guests": 180,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-eventos-yumbo-integral-alim-ahor",
+   "provider_id": "prv-eventos-yumbo-integral",
+   "category": "alimentacion",
+   "level": "ahorro",
+   "name": "Almuerzo económico",
+   "description": "Plato fuerte con bebida.",
+   "price_model": "por_invitado",
+   "base_price_cop": 15000,
+   "min_guests": 20,
+   "max_guests": 180,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-eventos-yumbo-integral-deco-ahor",
+   "provider_id": "prv-eventos-yumbo-integral",
+   "category": "decoracion",
+   "level": "ahorro",
+   "name": "Decoración económica",
+   "description": "Decoración básica de mesas y entrada.",
+   "price_model": "fijo",
+   "base_price_cop": 320000,
+   "min_guests": 1,
+   "max_guests": 180,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-palmira-fiestas-espa-equi",
+   "provider_id": "prv-palmira-fiestas",
+   "category": "espacio",
+   "level": "equilibrado",
+   "name": "Salón de fiestas Palmira",
+   "description": "Salón con aire acondicionado para 30 a 150 invitados.",
+   "price_model": "fijo",
+   "base_price_cop": 1000000,
+   "min_guests": 30,
+   "max_guests": 150,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-palmira-fiestas-alim-equi",
+   "provider_id": "prv-palmira-fiestas",
+   "category": "alimentacion",
+   "level": "equilibrado",
+   "name": "Banquete Palmira",
+   "description": "Menú de dos tiempos con servicio de mesa.",
+   "price_model": "por_invitado",
+   "base_price_cop": 26000,
+   "min_guests": 20,
+   "max_guests": 200,
+   "event_types": [
+    "cumpleanos",
+    "boda",
+    "xv"
+   ]
+  },
+  {
+   "id": "svc-palmira-fiestas-entr-ahor",
+   "provider_id": "prv-palmira-fiestas",
+   "category": "entretenimiento",
+   "level": "ahorro",
+   "name": "Música y sonido",
+   "description": "Sonido ambiental y playlist durante tres horas.",
+   "price_model": "fijo",
+   "base_price_cop": 280000,
+   "min_guests": 1,
+   "max_guests": 200,
+   "event_types": [
+    "cumpleanos"
+   ]
+  }
+ ]
+}

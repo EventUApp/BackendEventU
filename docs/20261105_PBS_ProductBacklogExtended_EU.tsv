@@ -1,0 +1,616 @@
+Tipo	Id de la Historia	Id de Tarea	Épica	MVP	Sprint	Rol	Característica / Funcionalidad	Razón / Resultado	Criterio de Aceptación	Estado de validación	Observación	Tipo de tarea	DoR	DoD	Estimación (SP Fibonacci)	Justificación de estimación	Prioridad MoSCoW	Justificación de prioridad	Notas del analista
+HU	HU_EU_01_01		EP-02 Recomendador y cotización	MVP 1	Sprint 1	Organizador	ingresar mi presupuesto, el tipo de evento y el número de invitados en el atajo «Arma mi evento por presupuesto»	recibir paquetes ajustados a lo que puedo gastar	"1. Dónde: pantalla 'Arma mi evento por presupuesto', abierta desde el acceso del 'Inicio' (HU_EU_01_12); formulario del recomendador con el botón 'Ver paquetes'.
+2. Campos:
+2.1 Presupuesto: obligatorio, número entero en COP, teclado numérico.
+2.2 Tipo de evento: obligatorio, lista de selección con 'Cumpleaños', 'Boda' y 'XV años'.
+2.3 Número de invitados: obligatorio, número entero, teclado numérico.
+3. Validación:
+3.1 Presupuesto vacío: 'Ingrese su presupuesto.'
+3.2 Presupuesto fuera de 1.000.000 a 50.000.000 COP (Propuesto): 'El presupuesto debe estar entre $1.000.000 y $50.000.000.'
+3.3 Tipo de evento sin seleccionar: 'Seleccione el tipo de evento.'
+3.4 Invitados vacío o fuera de 1 a 500 (Propuesto): 'Ingrese un número de invitados entre 1 y 500.'
+3.5 Cada mensaje aparece junto a su campo y el formulario no se envía hasta corregirlo.
+4. Restricción: no se consulta el API con datos inválidos; no se pide registro ni contraseña; los datos ingresados no se guardan en el servidor.
+5. Éxito: con datos válidos, 'Ver paquetes' abre la pantalla 'Paquetes recomendados' (HU_EU_01_02) mostrando los datos ingresados; al volver al formulario se conservan; si el usuario ya indicó tipo de evento e invitados en el buscador del 'Inicio', llegan precargados.
+6. Fallo: los errores de 3.1 a 3.4 se muestran junto al campo; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-REC-01 (M), RF-REC-02 (M), RF-GEN-05 (S), RF-EXP-10 (S). Tarea T1. Rangos de RN-19 Propuesto (PB-02). Modificada por CR-01: ahora es un atajo desde el Inicio.		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 10 SP; redondeo al Fibonacci superior	Must have	Contiene el primer despliegue (CI y URL del API) que necesitan todas las demás HU, y el atajo por presupuesto es el diferenciador de EventU (RF-REC-01, RF-REC-02, tarea T1).	Dependencia: T_HU_EU_01_01_4 (CI y despliegue) debe quedar el Día 1 temprano porque Jean Paul necesita la URL del API. Riesgo: la primera conexión del móvil al API. Recorte: quitar teclados específicos (RF-GEN-05). Cambio CR-01: la pantalla ya no es el Inicio.
+Tarea	HU_EU_01_01	T_HU_EU_01_01_1	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Organizador	Adaptar la pantalla del prototipo como Arma mi evento por presupuesto: formulario de tres campos, selector de tipo de evento, teclados numéricos y mensajes junto al campo, con precarga desde el buscador			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Parte del prototipo; solo se adapta y se enlaza con el API	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_01_01	T_HU_EU_01_01_2	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Organizador	Definir el esquema de entrada de POST /recommendations con validación de rangos (presupuesto 1.000.000 a 50.000.000 e invitados 1 a 500, Propuesto) y formato de error uniforme			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Esquema pydantic y manejo de errores	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_01_01	T_HU_EU_01_01_3	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Organizador	Pruebas de validación: campos vacíos, fuera de rango y datos válidos, en API y en la app			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos tabulados	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_01_01	T_HU_EU_01_01_4	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Organizador	Crear el repositorio del API, `make check` (lint, tipos, tests), despliegue en Render y variable de URL base en la app			Con observaciones		DevOps		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Primer despliegue con riesgo de arranque en frío	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_01_02		EP-02 Recomendador y cotización	MVP 1	Sprint 1	Organizador	visualizar tres paquetes (Ahorro, Equilibrado y Premium) con su costo total, desglose y presupuesto restante, y elegir uno	decidir sin cotizar servicio por servicio	"1. Dónde: pantalla 'Paquetes recomendados', tras HU_EU_01_01; endpoint de recomendación del API.
+2. Campos (por paquete):
+2.1 Modalidad: 'Ahorro', 'Equilibrado' o 'Premium'.
+2.2 Costo total en COP.
+2.3 Presupuesto restante en COP.
+2.4 Desglose por rubro: espacio, alimentación, decoración y, si se incluye, entretenimiento, con subtotal por rubro.
+2.5 Servicios incluidos: nombre, proveedor y precio.
+2.6 Estado de verificación del proveedor de cada servicio.
+3. Validación:
+3.1 Todo paquete incluye espacio, alimentación y decoración; el entretenimiento es opcional (RN-03, Propuesto).
+3.2 El total es igual a la suma de los servicios incluidos y el restante es igual al presupuesto menos el total.
+3.3 Los importes se muestran en COP enteros con separador de miles.
+4. Restricción: ningún paquete supera el presupuesto ingresado; no se muestra un paquete incompleto; las mismas entradas producen los mismos paquetes.
+5. Éxito: se muestran los tres paquetes en el orden Ahorro, Equilibrado y Premium con los datos de 2.1 a 2.6; cada paquete permite elegirlo con 'Elegir este paquete', que carga sus servicios en 'Mi evento' (HU_EU_02_13) con la modalidad como origen, seleccionarlo para comparar (HU_EU_02_07) y consultar la ficha de sus proveedores (HU_EU_02_08).
+6. Fallo: si el API no responde se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.' Si no se puede armar alguna modalidad se aplica HU_EU_01_03."	Con observaciones	RF-REC-03 (M), RF-REC-04 (M), RF-REC-06 (M), RF-REC-07 (M), RF-EXP-10 (S). Tareas T1, T2 y T4. El reparto por rubro y modalidad es Propuesto (PB-03, PB-08). Modificada por CR-01: elegir un paquete lo carga en «Mi evento».		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 10 SP; redondeo al Fibonacci superior	Should have	Aunque el SRS marca RF-REC-03 a 07 como Must, con CR-01 el recomendador es un atajo y el flujo principal pasa por el marketplace; es de lo primero que se recorta si el tiempo no alcanza.	Dependencia: necesita la función recomendar de HU_EU_01_03 y el contexto de «Mi evento» de HU_EU_02_13. Riesgo: formato de los importes y el desglose en pantallas pequeñas. Recorte: mostrar el estado de verificación solo en la ficha.
+Tarea	HU_EU_01_02	T_HU_EU_01_02_1	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Organizador	Armar la respuesta de POST /recommendations: tres paquetes con costo total, restante, desglose por rubro, servicios y estado de verificación			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Mapeo de la salida del dominio a la respuesta	Should have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_01_02	T_HU_EU_01_02_2	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Organizador	Pantalla Paquetes recomendados: tres tarjetas, desglose expandible, formato COP, acción Elegir este paquete que carga Mi evento, y navegación a comparación y ficha			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Varias vistas y estados de la pantalla; usa el carrito de Mi evento	Should have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_01_02	T_HU_EU_01_02_3	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Organizador	Pruebas del contrato de la respuesta (suma de servicios igual al total, restante correcto, orden de modalidades) y prueba manual en emulador			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Verificación de contrato y recorrido manual	Should have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_01_03		EP-02 Recomendador y cotización	MVP 1	Sprint 1	Sistema	garantizar que ningún paquete supere el presupuesto y avisar cuando no se pueda armar una modalidad	que el organizador nunca vea una propuesta que no puede pagar	"1. Dónde: lógica del recomendador en el backend y mensajes en la pantalla 'Paquetes recomendados'.
+2. Campos (entradas del cálculo):
+2.1 Presupuesto.
+2.2 Tipo de evento.
+2.3 Número de invitados.
+2.4 Catálogo vigente de servicios y precios.
+3. Validación:
+3.1 Un servicio es elegible si admite el tipo de evento y su capacidad cubre el número de invitados.
+3.2 El costo por invitado se multiplica por el número de invitados y se redondea a COP enteros.
+3.3 Cada modalidad compromete como máximo el 70 % (Ahorro), 85 % (Equilibrado) y 100 % (Premium) del presupuesto (Propuesto).
+3.4 La selección es determinista: ante empate gana el menor precio y, luego, el menor identificador (Propuesto).
+4. Restricción: nunca se devuelve un paquete con total mayor que el presupuesto; nunca se devuelve un paquete sin espacio, alimentación o decoración; el cálculo se verifica con una prueba de propiedad de al menos 100 entradas aleatorias sin ninguna violación.
+5. Éxito: con presupuesto y oferta suficientes se devuelven las tres modalidades; si solo alcanza para algunas, se devuelven esas y se informa de las que faltan.
+6. Fallo:
+6.1 Presupuesto menor que el paquete Ahorro más barato: no se muestra ningún paquete y aparece 'Con ese presupuesto no es posible armar un paquete. Pruebe con un presupuesto mayor.'
+6.2 Rubro obligatorio sin servicios elegibles: no se genera esa modalidad y aparece 'No hay servicios disponibles para este tipo de evento o número de invitados.'
+6.3 Error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-REC-05 (M), RF-REC-08 (M), RF-REC-09 (S). Tarea T1. Reglas RN-01, RN-06 y RN-11 a RN-16; porcentajes y desempate Propuesto (PB-03).		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 11 SP; redondeo al Fibonacci superior	Should have	Regla central del recomendador (RF-REC-05, RF-REC-08, tarea T1); con CR-01 el recomendador es un atajo y esta HU se recorta junto con HU_EU_01_02.	Dependencia: necesita el catálogo mínimo cargado (T_HU_EU_01_03_2), que también usa el listado de proveedores. Riesgo mayor del sprint: porcentajes y desempate son Propuesto (PB-03). Recorte: dejar solo Ahorro y Equilibrado si no alcanza el tiempo.
+Tarea	HU_EU_01_03	T_HU_EU_01_03_1	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Sistema	Implementar la función pura recomendar(presupuesto, tipo, invitados, catálogo) con las tres modalidades, desempate determinista y casos sin paquete posible			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Lógica central, pero acotada y asistida por agente	Should have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_01_03	T_HU_EU_01_03_2	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Sistema	Modelos de catálogo (servicios, proveedores) y carga mínima de datos de ejemplo para poder probar; los usa también el listado de proveedores			Con observaciones		Base de datos		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Tablas básicas y datos de prueba	Should have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_01_03	T_HU_EU_01_03_3	EP-02 Recomendador y cotización	MVP 1	Sprint 1	Sistema	Pruebas unitarias del recomendador y prueba de propiedad con 100 entradas aleatorias que nunca superan el presupuesto			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Incluye la prueba de propiedad	Should have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_01_04		EP-04 Experiencia transversal	MVP 1	Sprint 1	Organizador	que la app me avise cuando está cargando o falla la conexión y que no pierda mis datos al navegar	continuar sin repetir lo que ya ingresé	"1. Dónde: todas las pantallas que consumen el API (inicio, resultados, mapa, ficha, paquetes, Mi evento, reserva, pago y confirmación) y la navegación entre ellas.
+2. Campos:
+2.1 Indicador de carga.
+2.2 Mensaje de error de red.
+2.3 Botón 'Reintentar'.
+2.4 Acción de volver a la pantalla anterior.
+3. Validación:
+3.1 Durante cada petición se muestra el indicador de carga y se bloquean los botones de envío.
+3.2 Si el API tarda por arranque en frío, el indicador se mantiene hasta 60 s (Propuesto) con el texto 'Estamos conectando con el servidor. Esto puede tardar un momento.'
+3.3 Sin conexión o tiempo agotado se muestra 'No hay conexión con el servidor. Revise su conexión e intente nuevamente.'
+4. Restricción: la app no se cierra ante un error de red; no se muestran códigos, trazas ni datos técnicos; volver a una pantalla anterior no borra el presupuesto, el tipo de evento, los invitados, los filtros, los servicios de 'Mi evento', el paquete elegido ni los datos del cliente ya ingresados.
+5. Éxito: al recuperar la conexión, 'Reintentar' repite la petición y muestra el resultado; ir y volver entre pantallas conserva los datos.
+6. Fallo: ante un error inesperado del servidor: 'No fue posible completar la operación. Intente nuevamente.' sin datos técnicos."	Con observaciones	RF-GEN-01 (M), RF-GEN-02 (S), RF-GEN-03 (M), RF-GEN-06 (M). Tarea T2. RNF-FIA-01 y RNF-FIA-02; el tiempo de 60 s es Propuesto (PB-04).		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	8	Suma de tareas = 8 SP; redondeo al Fibonacci superior	Must have	Sin manejo de red la demo se rompe en Render gratuito (RF-GEN-01, RF-GEN-03, tarea T2).	Dependencia: el cliente del API de esta HU lo usan las demás pantallas, por eso va el Día 1. Riesgo: arranque en frío de 60 s o más. Recorte: eliminar el reintento automático y dejar solo el botón.
+Tarea	HU_EU_01_04	T_HU_EU_01_04_1	EP-04 Experiencia transversal	MVP 1	Sprint 1	Organizador	Cliente del API con tiempo de espera, indicador de carga, mensaje de error de red, botón Reintentar y conservación del estado (filtros, Mi evento y datos del cliente) al volver atrás			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Pieza transversal reutilizada por todas las pantallas	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_01_04	T_HU_EU_01_04_2	EP-04 Experiencia transversal	MVP 1	Sprint 1	Organizador	Respuestas de error con formato uniforme y sin datos técnicos			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	1	Manejador global	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_01_04	T_HU_EU_01_04_3	EP-04 Experiencia transversal	MVP 1	Sprint 1	Organizador	Pruebas manuales con el API apagado y con respuesta lenta; prueba de que volver atrás conserva los datos			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Escenarios de red simulados	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_01_12		EP-01 Exploración y proveedores	MVP 1	Sprint 1	Organizador	una pantalla de inicio con buscador, categorías y proveedores destacados	encontrar servicios para mi evento como en una app de reservas	"1. Dónde: pantalla 'Inicio', primera pantalla de la app (pestaña 'Inicio'); endpoint de inicio del API.
+2. Campos:
+2.1 Buscador: tipo de evento (lista con 'Cumpleaños', 'Boda' y 'XV años'), fecha del evento (selector, opcional), número de invitados (entero, teclado numérico) y botón 'Buscar'.
+2.2 Categorías: espacio, alimentación, decoración y entretenimiento, como accesos con ícono y número de proveedores.
+2.3 Sección 'Destacados': hasta 6 proveedores con foto, nombre, calificación y precio 'Desde'.
+2.4 Acceso 'Arma mi evento por presupuesto' (HU_EU_01_01).
+2.5 Acceso a 'Mi evento' con el número de servicios agregados.
+2.6 Pestañas inferiores: Inicio, Resultados, Mi evento y Reservas.
+3. Validación:
+3.1 Tipo de evento sin seleccionar: 'Seleccione el tipo de evento.'
+3.2 Invitados vacío o fuera de 1 a 500 (Propuesto): 'Ingrese un número de invitados entre 1 y 500.'
+3.3 Fecha, si se ingresa, no posterior a hoy: 'Seleccione una fecha posterior a hoy.' La fecha es opcional al buscar y obligatoria al reservar.
+4. Restricción: no se pide registro ni contraseña; las categorías y los destacados funcionan sin llenar el buscador; la búsqueda no guarda datos en el servidor; cambiar de pestaña no borra los datos ingresados.
+5. Éxito: 'Buscar' abre 'Resultados' con el tipo de evento, la fecha y los invitados aplicados; tocar una categoría abre 'Resultados' filtrado por ese rubro; tocar un destacado abre su ficha (HU_EU_02_08); el orden de los destacados sigue la regla RN-26 (Propuesto).
+6. Fallo: los errores de 3.1 a 3.3 se muestran junto al campo; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-EXP-01 (M), RF-EXP-02 (S), RF-EXP-10 (S), RF-EXP-11 (M), RF-GEN-05 (S). Nueva por CR-01. Orden de destacados (RN-26) y rangos de invitados (RN-19) Propuesto (PB-10).		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 11 SP; redondeo al Fibonacci superior	Must have	Es la puerta de entrada del marketplace y la primera pantalla que ve el evaluador (RF-EXP-01, RF-EXP-11).	Dependencia: HU_EU_01_04 para el cliente del API y HU_EU_02_05 para los resultados. Riesgo: depender de datos de destacados (Yenny). Recorte: omitir destacados (RF-EXP-02 es Should) y dejar buscador y categorías.
+Tarea	HU_EU_01_12	T_HU_EU_01_12_1	EP-01 Exploración y proveedores	MVP 1	Sprint 1	Organizador	Pantalla Inicio: buscador (tipo de evento, fecha opcional, invitados), categorías, sección Destacados, acceso a Arma mi evento por presupuesto y contador de Mi evento			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Pantalla con varias secciones y validaciones	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_01_12	T_HU_EU_01_12_2	EP-01 Exploración y proveedores	MVP 1	Sprint 1	Organizador	Endpoint GET /home con proveedores destacados (orden RN-26) y conteo de proveedores por rubro			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Consulta simple sobre la vista v_providers	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_01_12	T_HU_EU_01_12_3	EP-01 Exploración y proveedores	MVP 1	Sprint 1	Organizador	Navegación por pestañas (Inicio, Resultados, Mi evento, Reservas) y conservación del estado entre pestañas			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Ya existe la base de navegación en el repositorio	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_01_12	T_HU_EU_01_12_4	EP-01 Exploración y proveedores	MVP 1	Sprint 1	Organizador	Pruebas de validación del buscador, de GET /home y de la navegación entre pestañas			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos tabulados	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_02_05		EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	ver los proveedores en una lista de tarjetas con foto, calificación, verificación y precio «desde»	comparar opciones rápidamente como en una app de reservas	"1. Dónde: pantalla 'Resultados' (pestaña 'Resultados'), abierta desde 'Inicio' o desde la pestaña; endpoint de listado de proveedores del API.
+2. Campos:
+2.1 Tarjeta por proveedor: foto principal, nombre, rubros, barrio y municipio, calificación (promedio y número de reseñas), insignia 'Verificado' si aplica y precio 'Desde' en COP.
+2.2 Contador 'N resultados'.
+2.3 Acceso a filtros y orden (HU_EU_02_15) y conmutador 'Lista / Mapa' (HU_EU_03_14).
+3. Validación:
+3.1 Si hay número de invitados en la búsqueda, solo se listan proveedores con al menos un servicio cuya capacidad lo cubra (RN-14).
+3.2 El precio 'Desde' es el menor costo entre los servicios elegibles del proveedor y lo calcula el servidor (RN-25, Propuesto).
+3.3 La calificación es el promedio de las reseñas con un decimal; sin reseñas se muestra 'Sin reseñas' (RN-24).
+4. Restricción: el catálogo solo contiene proveedores de Cali y su área metropolitana; la app no permite editar el catálogo; el orden es determinista (empate: menor identificador); si una foto no carga se muestra un recuadro neutro, sin error.
+5. Éxito: la lista carga por páginas de 10 proveedores (Propuesto) y muestra más al llegar al final; tocar una tarjeta abre la ficha del proveedor (HU_EU_02_08).
+6. Fallo: sin resultados se muestra 'No encontramos proveedores con esos criterios.' con la acción 'Limpiar filtros'; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-EXP-03 (M), RF-EXP-05 (S), RF-CAT-01 (M), RF-CAT-04 (M), RF-GEN-04 (M). Modificada por CR-01: antes «Catálogo». Precio «desde» y página de 10 Propuesto (PB-10).		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 13 SP; redondeo al Fibonacci superior	Must have	Es el corazón del marketplace: sin el listado no hay forma de llegar a una ficha (RF-EXP-03).	Dependencia: el catálogo completo de Yenny alimenta también el recomendador. Riesgo: precio «desde» con servicios por invitado (RN-25). Recorte: paginación (cargar los 16 proveedores de una vez).
+Tarea	HU_EU_02_05	T_HU_EU_02_05_1	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Endpoint GET /providers: listado con rubros, calificación, foto principal, precio «desde» calculado en el servidor (RN-25), elegibilidad por invitados y paginación			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Consulta más cálculo del precio desde por proveedor	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_02_05	T_HU_EU_02_05_2	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Pantalla Resultados con tarjetas de proveedor (foto, calificación, verificación, precio desde), contador, estado vacío y carga por páginas			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Componentes nuevos (ProviderCard, RatingStars) y varios estados	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_02_05	T_HU_EU_02_05_3	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Completar el catálogo: servicios y precios reales de Cali por rubro, y marcar los proveedores destacados (Yenny)			Con observaciones		Datos/Contenido		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Captura de datos sobre una carga mínima ya existente	Must have	Hereda la prioridad de la HU	Responsable propuesto: Yenny.
+Tarea	HU_EU_02_05	T_HU_EU_02_05_4	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Pruebas del listado: elegibilidad por invitados, precio desde, paginación y estado vacío			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos tabulados	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_02_15		EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	filtrar y ordenar los resultados por rubro, tipo de evento, precio, calificación y verificación	ver solo lo que me interesa y en el orden que prefiero	"1. Dónde: pantalla 'Resultados', hoja de 'Filtros' y hoja de 'Ordenar'.
+2. Campos:
+2.1 Filtro por rubro: espacio, alimentación, decoración o entretenimiento.
+2.2 Filtro por tipo de evento: 'Cumpleaños', 'Boda' o 'XV años'.
+2.3 Filtro por rango de precio: mínimo y máximo, opcionales, números enteros.
+2.4 Filtro por calificación mínima: 3, 4 o 4,5 (Propuesto).
+2.5 Interruptor 'Solo verificados'.
+2.6 Orden: 'Recomendados', 'Menor precio', 'Mayor precio' y 'Mejor calificados'.
+2.7 Acciones 'Aplicar' y 'Limpiar filtros'; chips con los filtros activos.
+3. Validación:
+3.1 Si el precio mínimo es mayor que el máximo: 'El precio mínimo no puede ser mayor que el máximo.'
+3.2 Los campos de precio solo aceptan números enteros.
+3.3 El orden sigue la regla RN-26 (Propuesto): 'Recomendados' pone primero a los destacados, luego a los mejor calificados; 'Menor precio' y 'Mayor precio' usan el precio 'Desde'; todo empate se resuelve por identificador.
+4. Restricción: ningún proveedor listado incumple un filtro activo; filtros y orden se aplican en el servidor; los filtros y el orden elegidos se conservan al abrir una ficha y volver.
+5. Éxito: al aplicar filtros y orden la lista se actualiza solo con los proveedores que cumplen y en el orden elegido; los chips permiten quitar un filtro a la vez.
+6. Fallo: sin resultados se muestra 'No encontramos proveedores con esos criterios.' con 'Limpiar filtros'; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-EXP-04 (M), RF-CAT-02 (M), RF-CAT-03 (S). Nueva por CR-01. Orden RN-26 y calificaciones mínimas Propuesto (PB-10).		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	8	Suma de tareas = 8 SP; redondeo al Fibonacci superior	Must have	Los filtros y el orden son lo que distingue a un marketplace de una lista (RF-EXP-04).	Dependencia: HU_EU_02_05. Riesgo: combinaciones de filtros sin resultados. Recorte: dejar rubro, precio y orden, y omitir calificación mínima y «solo verificados».
+Tarea	HU_EU_02_15	T_HU_EU_02_15_1	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Filtros y orden de GET /providers: rubro, tipo de evento, precio, calificación mínima, solo verificados y orden RN-26 con desempate por identificador			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Extiende la consulta del listado	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_02_15	T_HU_EU_02_15_2	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Hoja de Filtros y hoja de Ordenar en Resultados, chips de filtros activos y Limpiar filtros			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Dos hojas inferiores y estado de filtros	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_02_15	T_HU_EU_02_15_3	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Pruebas de filtros combinados, orden determinista y mensaje de precio mínimo mayor que el máximo			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Combinaciones tabuladas	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_02_08		EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	consultar la ficha de un proveedor, su estado de verificación y sus servicios	saber con quién contrataría y qué tan confiable es	"1. Dónde: pantalla 'Ficha del proveedor', abierta desde 'Inicio', 'Resultados', 'Mapa', 'Mi evento' o 'Paquetes recomendados'; endpoint de proveedor del API. La galería, la calificación y las reseñas se especifican en HU_EU_02_16.
+2. Campos:
+2.1 Nombre del proveedor.
+2.2 Rubros y descripción del alcance del servicio.
+2.3 Ubicación: barrio y municipio.
+2.4 Datos de contacto: teléfono y correo.
+2.5 Estado de verificación: 'Verificado' o 'En revisión'.
+2.6 Comprobaciones registradas, con tipo y fecha, cuando el proveedor está verificado.
+2.7 Servicios del proveedor con nombre, descripción, capacidad y precio.
+2.8 Botón 'Agregar a mi evento' en cada servicio (HU_EU_02_13).
+3. Validación:
+3.1 Solo se muestra 'Verificado' si existe al menos una comprobación registrada.
+3.2 Toda ficha tiene los datos de 2.1 a 2.4.
+3.3 Un servicio cuya capacidad no cubre los invitados indicados se muestra deshabilitado con 'Este servicio no admite ese número de invitados.'
+4. Restricción: la ficha no promete el cumplimiento del servicio; la app no permite editar la ficha; el estado 'Verificado' nunca se muestra sin comprobaciones documentadas.
+5. Éxito: la ficha muestra los datos de 2.1 a 2.7 y permite agregar un servicio a 'Mi evento'; en los proveedores verificados aparece 'La verificación confirma los datos del proveedor, pero no garantiza el cumplimiento del servicio.'
+6. Fallo: si el proveedor no existe: 'No encontramos este proveedor.'; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Lista	RF-PRO-01 (M), RF-PRO-02 (M), RF-PRO-03 (M), RF-PRO-04 (M), RF-PRO-05 (S). Tarea T3. RN-07. Modificada por CR-01: botón «Agregar a mi evento».		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 12 SP; redondeo al Fibonacci superior	Must have	La ficha con verificación diferencia a EventU y es el paso previo a agregar un servicio (RF-PRO-01 a RF-PRO-04, tarea T3).	Dependencia: las comprobaciones de verificación las prepara Yenny. Riesgo: datos de verificación reales o simulados que se deben rotular. Recorte: omitir el listado de servicios del proveedor (RF-PRO-05 es Should).
+Tarea	HU_EU_02_08	T_HU_EU_02_08_1	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Modelos de proveedor y de comprobaciones de verificación, con carga de datos			Lista		Base de datos		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Dos tablas y carga	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_02_08	T_HU_EU_02_08_2	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Endpoint GET /providers/{id} con estado de verificación, comprobaciones, ubicación y servicios con capacidad y precio			Lista		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Consulta simple	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_02_08	T_HU_EU_02_08_3	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Pantalla Ficha del proveedor con el estado y el aviso de verificación, servicios con capacidad y botón Agregar a mi evento			Lista		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Adaptación y consumo del API	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_02_08	T_HU_EU_02_08_4	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Preparar los datos de proveedores y sus comprobaciones de verificación (Yenny)			Lista		Datos/Contenido		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Captura de contenido	Must have	Hereda la prioridad de la HU	Responsable propuesto: Yenny.
+Tarea	HU_EU_02_08	T_HU_EU_02_08_5	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Pruebas: Verificado solo con comprobaciones, proveedor inexistente y ficha completa			Lista		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos de la regla de verificación	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_02_16		EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	ver la galería de fotos, la calificación y las reseñas de un proveedor	confiar en mi decisión como en TripAdvisor o Booking	"1. Dónde: pantalla 'Ficha del proveedor' (sección superior y sección 'Reseñas') y tarjeta de 'Resultados'; endpoint de proveedor del API.
+2. Campos:
+2.1 Galería de 3 a 6 fotos desplazables, con contador 'n/N' y texto alternativo.
+2.2 Calificación promedio y número de reseñas.
+2.3 Lista de hasta 5 reseñas de ejemplo, con nombre del autor, fecha, puntaje de 1 a 5 y comentario.
+2.4 Aviso 'Reseñas de ejemplo para la demostración.'
+3. Validación:
+3.1 La calificación mostrada es el promedio de las reseñas con un decimal (RN-24).
+3.2 Cada proveedor de la semilla tiene al menos 3 fotos y 3 reseñas.
+3.3 Las reseñas se ordenan de la más reciente a la más antigua.
+4. Restricción: las reseñas son de solo lectura y de ejemplo; no hay ningún campo para escribir una reseña ni para subir fotos (RN-27); si una foto no carga se muestra un recuadro neutro sin mensaje de error.
+5. Éxito: la ficha muestra la galería, la calificación y las reseñas; la foto principal es la de posición 1 y es la misma de la tarjeta de 'Resultados'.
+6. Fallo: si el proveedor no tiene fotos se muestra un recuadro con su nombre; si no tiene reseñas aparece 'Sin reseñas'; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-EXP-05 (S), RF-EXP-06 (S). Nueva por CR-01. Fotos y reseñas de ejemplo (S-05, S-06; PB-11).		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 13 SP; redondeo al Fibonacci superior	Should have	Aporta el aspecto de confianza y de producto «real», pero el flujo hasta el pago funciona sin fotos ni reseñas (RF-EXP-05, RF-EXP-06 son Should).	Dependencia: fotos y reseñas de Yenny (T_HU_EU_02_16_4) y el modelo de datos ya incluido en la migración inicial. Riesgo: licencia de las fotos (P-14). Recorte: dejar la foto principal y omitir las reseñas.
+Tarea	HU_EU_02_16	T_HU_EU_02_16_1	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Verificar modelos y vista de fotos y reseñas (ya incluidos en la migración inicial) y la carga de la semilla			Con observaciones		Base de datos		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	1	El esquema ya está en la migración inicial; solo se verifica	Should have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_02_16	T_HU_EU_02_16_2	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Ampliar GET /providers/{id} con galería, calificación y hasta 5 reseñas ordenadas			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Consultas adicionales sobre la ficha	Should have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_02_16	T_HU_EU_02_16_3	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Galería de fotos desplazable con contador, calificación con estrellas y lista de reseñas en la ficha; recuadro neutro si una foto falla			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Galería con gestos y varios estados	Should have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_02_16	T_HU_EU_02_16_4	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Preparar fotos (4 por proveedor, con licencia o de banco libre), reseñas de ejemplo y coordenadas (Yenny)			Con observaciones		Datos/Contenido		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Captura de contenido; la semilla ya trae imágenes de ejemplo	Should have	Hereda la prioridad de la HU	Responsable propuesto: Yenny.
+Tarea	HU_EU_02_16	T_HU_EU_02_16_5	EP-01 Exploración y proveedores	MVP 1	Sprint 2	Organizador	Pruebas: calificación igual al promedio, orden de reseñas, proveedor sin fotos ni reseñas			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos de la regla de calificación	Should have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_02_13		EP-03 Reserva y pago simulado	MVP 1	Sprint 2	Organizador	reunir en «Mi evento» los servicios que elijo, con su total	revisar mi evento antes de reservar	"1. Dónde: pantalla 'Mi evento' (pestaña 'Mi evento'), accesible desde cualquier pantalla; botón 'Agregar a mi evento' en la ficha del proveedor.
+2. Campos:
+2.1 Servicios agregados, agrupados por rubro, con proveedor, precio en COP y acciones 'Cambiar' y 'Quitar'.
+2.2 Total en COP.
+2.3 Tipo de evento, número de invitados y fecha, editables.
+2.4 Presupuesto, opcional; si se ingresa, se muestra el presupuesto restante (HU_EU_02_06).
+2.5 Botón 'Continuar a reservar' (HU_EU_03_09).
+3. Validación:
+3.1 Se permite un servicio por rubro; al agregar otro del mismo rubro aparece 'Ya tiene un servicio de este rubro. ¿Desea reemplazarlo?' con 'Reemplazar' y 'Cancelar' (RN-23, Propuesto).
+3.2 No se puede agregar un servicio cuya capacidad no cubra los invitados: 'Este servicio no admite ese número de invitados.'
+3.3 'Continuar a reservar' exige espacio, alimentación y decoración; si falta alguno aparece 'Agregue espacio, alimentación y decoración para reservar.' (RN-03)
+3.4 Si cambia el número de invitados se revalida cada servicio y se avisa de los que dejan de ser elegibles.
+4. Restricción: el servidor calcula y valida el total (ADR-09); la app envía identificadores de servicio, nunca precios; no se pide cuenta; el contenido de 'Mi evento' se conserva al navegar entre pantallas.
+5. Éxito: 'Agregar a mi evento' actualiza el contador de la pestaña sin salir de la ficha; al elegir un paquete (HU_EU_01_02) sus servicios se cargan aquí con su modalidad de origen (RN-21, Propuesto); 'Continuar a reservar' abre 'Datos del cliente'.
+6. Fallo: con 'Mi evento' vacío aparece 'Aún no ha agregado servicios.' con la acción 'Ir al inicio'; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-EXP-07 (M), RF-EXP-08 (M), RF-EXP-10 (S), RF-RES-01 (M), RF-GEN-01 (M). Nueva por CR-01. RN-21 a RN-23 Propuesto (PB-12).		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	8	Suma de tareas = 8 SP; redondeo al Fibonacci superior	Must have	Es el puente entre explorar y reservar: sin «Mi evento» no hay qué reservar (RF-EXP-07, RF-RES-01).	Dependencia: HU_EU_02_08 (agregar desde la ficha) y HU_EU_01_04 (estado que no se pierde). Riesgo: reglas de un servicio por rubro y de capacidad. Recorte: omitir la confirmación al reemplazar y reemplazar directamente.
+Tarea	HU_EU_02_13	T_HU_EU_02_13_1	EP-03 Reserva y pago simulado	MVP 1	Sprint 2	Organizador	Estado de Mi evento (FlowContext y utils/cart): agregar con reemplazo por rubro, quitar, revalidación por invitados, botón Agregar a mi evento en la ficha			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	La lógica pura ya está en el repositorio con pruebas	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_02_13	T_HU_EU_02_13_2	EP-03 Reserva y pago simulado	MVP 1	Sprint 2	Organizador	Pantalla Mi evento: servicios por rubro, total, datos del evento, presupuesto opcional, avisos de rubros faltantes y estado vacío			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Pantalla con varias secciones y estados	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_02_13	T_HU_EU_02_13_3	EP-03 Reserva y pago simulado	MVP 1	Sprint 2	Organizador	Pruebas de las reglas: un servicio por rubro, mínimo para reservar, capacidad, cambio de invitados y conservación al navegar			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos de las reglas RN-22 y RN-23	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_02_06		EP-02 Recomendador y cotización	MVP 1	Sprint 2	Organizador	cambiar o quitar servicios de mi evento y ver al instante el nuevo total y el presupuesto restante	adaptarlo a mis preferencias sin pasarme del presupuesto	"1. Dónde: pantalla 'Mi evento'; endpoint de cotización del API (reemplaza al ajuste de paquete).
+2. Campos:
+2.1 Servicios agrupados por rubro.
+2.2 Acción 'Cambiar' por servicio, que muestra las alternativas elegibles del mismo rubro con su precio.
+2.3 Acción 'Quitar' disponible solo para el entretenimiento.
+2.4 Total y, si hay presupuesto, presupuesto restante, visibles en todo momento.
+2.5 Acción 'Restablecer' para volver al paquete de origen, cuando 'Mi evento' proviene de un paquete (opcional).
+3. Validación:
+3.1 Las alternativas son solo servicios elegibles para el tipo de evento y el número de invitados.
+3.2 No se puede quitar espacio, alimentación ni decoración.
+3.3 Total y restante se recalculan en cada cambio.
+4. Restricción: con presupuesto, no se aplica ningún cambio que haga que el total lo supere; sin presupuesto no hay tope (RN-22); el recálculo ocurre en la misma pantalla, sin cerrarla ni recargarla.
+5. Éxito: al cambiar o quitar un servicio, total y restante se actualizan en la misma pantalla; 'Restablecer' devuelve los servicios del paquete de origen.
+6. Fallo: si el cambio excede el presupuesto no se aplica y aparece 'Ese cambio supera su presupuesto. Elija otra opción.'; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-REC-11 (M), RF-REC-12 (M), RF-REC-13 (C), RF-EXP-08 (M). Tareas T2 y T4. RN-01, RN-05 y RN-22. Modificada por CR-01: el ajuste ocurre en «Mi evento».		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 10 SP; redondeo al Fibonacci superior	Must have	Es el paso de ajuste del flujo y la invariante debe sostenerse al recalcular (RF-REC-11, RF-REC-12, tareas T2 y T4).	Dependencia: HU_EU_02_13. Riesgo: recálculo con alternativas elegibles. Recorte: dejar solo Cambiar y Quitar, y omitir Restablecer (RF-REC-13 es Could).
+Tarea	HU_EU_02_06	T_HU_EU_02_06_1	EP-02 Recomendador y cotización	MVP 1	Sprint 2	Organizador	Endpoint POST /quotes: valida elegibilidad, calcula total y restante (presupuesto opcional) y rechaza si supera el presupuesto; reemplaza a /recommendations/adjust			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Reutiliza el dominio de HU_EU_01_03	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_02_06	T_HU_EU_02_06_2	EP-02 Recomendador y cotización	MVP 1	Sprint 2	Organizador	Ajuste en Mi evento: alternativas del mismo rubro, Cambiar, Quitar solo entretenimiento, total y restante en vivo, Restablecer			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Estado local y recálculo en pantalla	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_02_06	T_HU_EU_02_06_3	EP-02 Recomendador y cotización	MVP 1	Sprint 2	Organizador	Pruebas de recálculo, rechazo por exceder el presupuesto, presupuesto ausente y servicios que no se pueden quitar			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos límite del presupuesto	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_02_07		EP-02 Recomendador y cotización	MVP 1	Sprint 2	Organizador	comparar al menos dos paquetes lado a lado	elegir el que mejor equilibra costo y servicios	"1. Dónde: pantalla 'Comparar paquetes', abierta desde 'Paquetes recomendados'.
+2. Campos:
+2.1 Selección de dos o tres paquetes a comparar, con casillas.
+2.2 Por paquete: modalidad, costo total, presupuesto restante y servicios incluidos por rubro.
+2.3 Acción 'Elegir este paquete' en cada paquete comparado.
+3. Validación:
+3.1 Con menos de dos paquetes seleccionados: 'Seleccione al menos dos paquetes para comparar.'
+3.2 Los datos comparados coinciden con los del detalle de cada paquete, incluidos los ajustes hechos en 'Mi evento' (HU_EU_02_06).
+4. Restricción: comparar no modifica los paquetes; no se muestran paquetes que superen el presupuesto.
+5. Éxito: los paquetes seleccionados se muestran juntos con los datos de 2.2; 'Elegir este paquete' carga sus servicios en 'Mi evento' (HU_EU_02_13); un usuario puede comparar dos paquetes y consultar su desglose en 5 minutos o menos.
+6. Fallo: con menos de dos paquetes seleccionados se muestra el mensaje de 3.1; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Lista	RF-REC-10 (C). Tareas T2 y T4. RNF-USA-01 (criterio de la Entrega 1, §3.8). Prioridad bajada de Must a Could por CR-01.		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	5	Suma de tareas = 5 SP; redondeo al Fibonacci superior	Could have	Con el marketplace como entrada, comparar paquetes ya no está en el camino al pago; es de lo primero que se recorta (RF-REC-10).	Sin tarea de Backend: la comparación usa los datos ya recibidos de la recomendación. Recorte: limitar la comparación a dos paquetes o eliminar la HU.
+Tarea	HU_EU_02_07	T_HU_EU_02_07_1	EP-02 Recomendador y cotización	MVP 1	Sprint 2	Organizador	Pantalla Comparar paquetes con selección de dos o tres paquetes y acción Elegir este paquete que carga Mi evento			Lista		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Reutiliza componentes de las tarjetas	Could have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_02_07	T_HU_EU_02_07_2	EP-02 Recomendador y cotización	MVP 1	Sprint 2	Organizador	Pruebas de la selección mínima, de coincidencia con el paquete y del paso a Mi evento			Lista		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos de selección	Could have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_03_09		EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	ingresar mis datos de contacto y la fecha del evento para reservar lo que armé en «Mi evento»	dejar registrada mi reserva	"1. Dónde: pantallas 'Datos del cliente' y 'Resumen de la reserva', abiertas desde 'Mi evento'; endpoint de reservas del API.
+2. Campos:
+2.1 Nombre completo: obligatorio, texto.
+2.2 Correo electrónico: obligatorio, texto, teclado de correo.
+2.3 Teléfono: obligatorio, numérico de 10 dígitos (Propuesto), teclado telefónico.
+2.4 Fecha del evento: obligatoria, selector de fecha.
+2.5 Resumen: servicios de 'Mi evento', total y, si se indicó presupuesto, presupuesto restante.
+2.6 Botón 'Continuar al pago'.
+2.7 Acción 'Cancelar reserva' antes del pago (opcional).
+3. Validación:
+3.1 Nombre vacío: 'Ingrese su nombre.'
+3.2 Correo sin formato válido: 'Ingrese un correo electrónico válido.'
+3.3 Teléfono distinto de 10 dígitos (Propuesto): 'Ingrese un teléfono de 10 dígitos.'
+3.4 Fecha vacía o no posterior a hoy: 'Seleccione una fecha posterior a hoy.'
+3.5 El servidor comprueba que el total coincide con la suma de los precios vigentes y que, si hay presupuesto, no lo supera.
+4. Restricción: no se pide registro ni contraseña; solo se guardan nombre, correo y teléfono como datos personales; la reserva guarda una copia de los servicios y precios y su origen (modalidad del paquete o 'personalizado', RN-21); no se crea la reserva con datos inválidos.
+5. Éxito: se crea la reserva en estado «creada» con un número único (Propuesto: 'EU-' más 6 caracteres alfanuméricos) y la app abre la pantalla de pago (HU_EU_03_10). Si el usuario cancela antes de pagar, la reserva pasa a «cancelada» y no admite pago.
+6. Fallo: los errores de 3.1 a 3.4 se muestran junto al campo; si el total no coincide, excede el presupuesto o falta un rubro obligatorio: 'No fue posible crear la reserva. Revise su evento e intente nuevamente.'; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-RES-01 a RF-RES-06 (M), RF-RES-07 (S), RF-RES-08 (C), RF-GEN-05 (S). Objetivo OE-5. Teléfono y formato del número Propuesto (PB-05, PB-06). Aviso de tratamiento de datos pendiente (PB-09). Modificada por CR-01: se reserva desde «Mi evento».		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 12 SP; redondeo al Fibonacci superior	Must have	Registra la reserva, paso previo al pago (RF-RES-01 a RF-RES-06, objetivo OE-5).	Dependencia: HU_EU_02_13 para tener servicios que reservar. Riesgo: verificación de total en servidor y presupuesto opcional. Recorte: omitir Cancelar reserva (RF-RES-08 es Could).
+Tarea	HU_EU_03_09	T_HU_EU_03_09_1	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Modelos de reserva (presupuesto opcional y origen) y de copia de servicios y precios, con migración			Con observaciones		Base de datos		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Tablas de reservas	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_03_09	T_HU_EU_03_09_2	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Endpoint POST /reservations desde service_ids: validación de datos, verificación del total, rubros obligatorios, presupuesto opcional, origen de la reserva, número de reserva y estados			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Reglas de negocio y generación del número	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_03_09	T_HU_EU_03_09_3	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Pantallas Datos del cliente y Resumen desde Mi evento: formulario con validaciones, teclados y botón Continuar al pago			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Formulario sobre diseño existente	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_03_09	T_HU_EU_03_09_4	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Pruebas de validación de campos, total que no coincide, reserva sin presupuesto y creación correcta de la reserva			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos de campos y de negocio	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_03_10		EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	pagar mi reserva con una tarjeta de prueba	completar el flujo sin que se cobre dinero real	"1. Dónde: pantalla 'Pago'; endpoint de pagos del API.
+2. Campos:
+2.1 Resumen: número de reserva y monto a pagar en COP.
+2.2 Número de tarjeta: obligatorio, numérico de 16 dígitos, teclado numérico.
+2.3 Vencimiento (mes y año) y código de seguridad: obligatorios, numéricos.
+2.4 Aviso permanente: 'Pago simulado: no se cobrará dinero real.'
+2.5 Botón 'Pagar'.
+2.6 Tarjetas de prueba visibles para la demo (Propuesto): aprobada 4242 4242 4242 4242 y rechazada 4000 0000 0000 0002.
+3. Validación:
+3.1 Número vacío o distinto de 16 dígitos: 'Ingrese un número de tarjeta válido.'
+3.2 Vencimiento con formato inválido o vencido: 'Ingrese una fecha de vencimiento válida.'
+3.3 Código vacío: 'Ingrese el código de seguridad.'
+3.4 Cualquier número distinto de las tarjetas de prueba se rechaza (Propuesto).
+4. Restricción: no se almacena número de tarjeta, vencimiento ni código, solo el resultado, el monto, una referencia simulada y la fecha; no se mueve dinero ni se llama a una pasarela real; el botón se bloquea mientras se procesa y un segundo pago aprobado sobre una reserva ya pagada se ignora.
+5. Éxito: con la tarjeta aprobada el pago queda «aprobado», la reserva «pagada» y se abre la confirmación (HU_EU_03_11).
+6. Fallo: con la tarjeta rechazada el pago queda «rechazado», la reserva «pago_rechazado» y aparece 'El pago fue rechazado. Verifique los datos o intente con otra tarjeta.'; el usuario puede reintentar y, si el nuevo intento es aprobado, la reserva pasa a «pagada»; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-PAG-01 (M), RF-PAG-02 (M), RF-PAG-03 (M), RF-PAG-04 (M), RF-PAG-05 (S), RF-PAG-06 (M), RF-PAG-07 (S), RF-PAG-08 (S), RF-GEN-05 (S). RN-09 y RN-17. Tarjetas de prueba Propuesto (PB-07).		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 12 SP; redondeo al Fibonacci superior	Must have	Es el cierre del flujo pedido: llegar hasta el pago simulado (RF-PAG-01 a RF-PAG-04, RF-PAG-06).	Dependencia: HU_EU_03_09. Riesgo: transiciones de estado y reintento tras rechazo. Recorte: omitir el bloqueo del doble pago (RF-PAG-07 es Should) solo si el tiempo no alcanza.
+Tarea	HU_EU_03_10	T_HU_EU_03_10_1	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Puerto PaymentGateway con implementación simulada, POST /payments y transición de estados de la reserva			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Dominio de estados más reintento	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_03_10	T_HU_EU_03_10_2	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Modelo de pagos sin datos de tarjeta, con migración			Con observaciones		Base de datos		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	1	Una tabla	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_03_10	T_HU_EU_03_10_3	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Pantalla Pago: tarjeta de prueba, aviso de simulación, estados aprobado y rechazado, y reintento			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Formulario sobre diseño existente	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_03_10	T_HU_EU_03_10_4	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Pruebas de pago aprobado, rechazado, reintento y doble pago; verificación de que no se guardan datos de tarjeta			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Cubre los caminos y la seguridad	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_03_11		EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	ver la confirmación de mi reserva y poder consultarla por su número	tener constancia de lo que reservé	"1. Dónde: pantalla 'Confirmación', tras un pago aprobado, y pantalla 'Consultar reserva' (pestaña 'Reservas'); endpoint de reservas del API.
+2. Campos:
+2.1 Número de reserva.
+2.2 Paquete, servicios con su proveedor y precio, y total.
+2.3 Datos de contacto y fecha del evento.
+2.4 Estado de la reserva.
+2.5 Aviso: 'El pago fue simulado.'
+2.6 Campo 'Número de reserva': texto, con el botón 'Consultar'.
+2.7 Acción 'Volver al inicio' (opcional).
+3. Validación:
+3.1 Número vacío: 'Ingrese el número de reserva.'
+3.2 Formato distinto de 'EU-' más 6 caracteres alfanuméricos (Propuesto): 'El número de reserva no es válido.'
+4. Restricción: la confirmación solo se muestra para reservas pagadas; la consulta no permite modificar la reserva; nunca se muestran datos de tarjeta.
+5. Éxito: tras un pago aprobado se muestran los datos de 2.1 a 2.5; la consulta con un número existente muestra los mismos datos; 'Volver al inicio' abre 'Inicio' con 'Mi evento' vacío.
+6. Fallo: si el número no existe: 'No encontramos una reserva con ese número.'; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-CNF-01 (M), RF-CNF-02 (S), RF-CNF-03 (S), RF-CNF-04 (C). Objetivo OE-5. Formato del número Propuesto (PB-06). La consulta vive en la pestaña «Reservas».		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	8	Suma de tareas = 7 SP; redondeo al Fibonacci superior	Must have	Cierra el flujo con la constancia de la reserva (RF-CNF-01, objetivo OE-5).	Dependencia: HU_EU_03_10. Riesgo: bajo. Recorte: omitir la consulta por número (RF-CNF-02 y RF-CNF-03 son Should) y dejar solo la confirmación.
+Tarea	HU_EU_03_11	T_HU_EU_03_11_1	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Endpoint GET /reservations/{code} y respuesta de confirmación solo para reservas pagadas			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Consulta simple	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_03_11	T_HU_EU_03_11_2	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Pantalla Confirmación y pantalla Consultar reserva en la pestaña Reservas, con Volver al inicio			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	3	Dos vistas de solo lectura	Must have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_03_11	T_HU_EU_03_11_3	EP-03 Reserva y pago simulado	MVP 1	Sprint 3	Organizador	Pruebas de confirmación, número inexistente y formato inválido; recorrido completo de extremo a extremo en dispositivo			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Incluye la prueba integral	Must have	Hereda la prioridad de la HU	Responsable propuesto: David.
+HU	HU_EU_03_14		EP-01 Exploración y proveedores	MVP 1	Sprint 3	Organizador	ver los resultados en un mapa	elegir proveedores cercanos al lugar de mi evento	"1. Dónde: pantalla 'Resultados' en modo 'Mapa'; mapa pequeño en la ficha del proveedor.
+2. Campos:
+2.1 Marcadores con el precio 'Desde' para cada proveedor con coordenadas.
+2.2 Tarjeta emergente con foto, nombre, calificación y botón 'Ver ficha'.
+2.3 Filtros y orden compartidos con la lista (HU_EU_02_15).
+2.4 Botón 'Buscar en esta zona'.
+3. Validación:
+3.1 Solo se dibujan proveedores con coordenadas válidas (latitud y longitud ambas presentes).
+3.2 Si el permiso de ubicación se niega, el mapa se centra en Cali y no se vuelve a pedir en la sesión.
+4. Restricción: las coordenadas son aproximadas y no se muestra una dirección exacta (RN-28); la ubicación del usuario no se envía ni se guarda en el servidor.
+5. Éxito: tocar un marcador abre su tarjeta y luego la ficha; mover el mapa y 'Buscar en esta zona' actualiza los resultados con los proveedores de esa zona.
+6. Fallo: si el mapa no carga: 'No fue posible mostrar el mapa. Use la vista de lista.' y se vuelve a la lista; si falla la conexión se aplica HU_EU_01_04; ante un error inesperado: 'No fue posible completar la operación. Intente nuevamente.'"	Con observaciones	RF-EXP-09 (C). Nueva por CR-01. Coordenadas aproximadas de ejemplo (S-07; PB-13).		"• Criterios de aceptación completos
+• Mensajes definidos (los marcados Propuesto, pendientes de validar en PB-01)
+• Datos de prueba disponibles
+• Dependencias identificadas"	"• Todas las tareas de la HU terminadas
+• Criterios de aceptación verificados por QA (David) en el emulador o dispositivo
+• Demo del recorrido de la HU sin errores"	13	Suma de tareas = 10 SP; redondeo al Fibonacci superior	Could have	Mejora la exploración pero no está en el camino al pago; se construye si sobra tiempo (RF-EXP-09 es Could).	Dependencia: HU_EU_02_05 y las coordenadas de Yenny (P-16). Riesgo: librería nativa de mapas y clave de Google Maps fuera de Expo Go (R-12). Recorte: omitir la HU completa.
+Tarea	HU_EU_03_14	T_HU_EU_03_14_1	EP-01 Exploración y proveedores	MVP 1	Sprint 3	Organizador	Filtro por zona (bbox) en GET /providers y coordenadas en la respuesta			Con observaciones		Backend		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	1	Un filtro adicional sobre el listado	Could have	Hereda la prioridad de la HU	Responsable propuesto: David.
+Tarea	HU_EU_03_14	T_HU_EU_03_14_2	EP-01 Exploración y proveedores	MVP 1	Sprint 3	Organizador	Vista Mapa en Resultados: marcadores con precio, tarjeta emergente, Buscar en esta zona y mapa pequeño en la ficha (react-native-maps)			Con observaciones		Frontend móvil		"• Código en rama y PR revisado
+• Probada en emulador o dispositivo
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	5	Librería nativa y varios estados	Could have	Hereda la prioridad de la HU	Responsable propuesto: Jean Paul.
+Tarea	HU_EU_03_14	T_HU_EU_03_14_3	EP-01 Exploración y proveedores	MVP 1	Sprint 3	Organizador	Preparar coordenadas aproximadas de cada proveedor (Yenny)			Con observaciones		Datos/Contenido		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Captura de datos	Could have	Hereda la prioridad de la HU	Responsable propuesto: Yenny.
+Tarea	HU_EU_03_14	T_HU_EU_03_14_4	EP-01 Exploración y proveedores	MVP 1	Sprint 3	Organizador	Pruebas: filtro por zona, proveedor sin coordenadas y mapa que no carga			Con observaciones		Pruebas		"• Código en rama y PR revisado
+• `lint + tipos + tests` en verde
+• Criterios de aceptación de la HU verificados para esta tarea
+• Sin secretos en el repo
+• Bitácora de prompts actualizada"	2	Casos de zona y de fallo	Could have	Hereda la prioridad de la HU	Responsable propuesto: David.
