@@ -8,6 +8,32 @@ from app.recomendador.domain.tipos import (
 from seed.load import load_seed
 
 
+def test_post_recommendations_uses_seeded_catalog(client, session):
+    load_seed(session)
+
+    response = client.post(
+        "/api/v1/recommendations",
+        json={"budget_cop": 10_000_000, "event_type": "boda", "guests": 80},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert [package["modality"] for package in body["packages"]] == [
+        "ahorro",
+        "equilibrado",
+        "premium",
+    ]
+    assert body["unavailable"] == []
+    for package in body["packages"]:
+        items = [item for category in package["breakdown"] for item in category["items"]]
+        assert {"espacio", "alimentacion", "decoracion"} <= {
+            category["category"] for category in package["breakdown"]
+        }
+        assert package["total_cop"] == sum(item["cost_cop"] for item in items)
+        assert package["total_cop"] <= 10_000_000
+        assert all(isinstance(item["cost_cop"], int) for item in items)
+
+
 def test_post_recommendations_maps_domain_packages_and_unavailable(client, session, monkeypatch):
     load_seed(session)
     observed: dict[str, object] = {}
