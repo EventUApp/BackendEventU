@@ -1,6 +1,7 @@
 import uuid
 from datetime import date, timedelta
 
+import pytest
 from sqlalchemy import text
 
 from seed.load import load_seed
@@ -139,7 +140,7 @@ def test_provider_detail_includes_gallery_and_review_summary(client, session):
         text("select round(avg(rating), 1), count(*) from provider_reviews where provider_id = :provider_id"),
         {"provider_id": "prv-salon-los-guaduales"},
     ).one()
-    assert body["rating_avg"] == expected_rating == 4.7
+    assert body["rating_avg"] == pytest.approx(float(expected_rating)) == 4.7
     assert body["rating_count"] == expected_count == 3
     assert len(body["reviews"]) <= 5
     assert all(
@@ -172,8 +173,8 @@ def test_provider_detail_rounds_review_average_to_one_decimal(client, session):
         text("select round(avg(rating), 1) from provider_reviews where provider_id = :provider_id"),
         {"provider_id": "prv-salon-los-guaduales"},
     ).scalar_one()
-    assert expected_rating == 4.3
-    assert body["rating_avg"] == expected_rating
+    assert float(expected_rating) == 4.3
+    assert body["rating_avg"] == pytest.approx(float(expected_rating))
 
 
 def test_provider_detail_gallery_matches_list_cover_photo(client, session):
@@ -251,7 +252,7 @@ def test_provider_detail_returns_only_five_newest_reviews(client, session):
             "from provider_reviews where provider_id = 'prv-salon-los-guaduales'"
         )
     ).one()
-    assert body["rating_avg"] == expected_rating
+    assert body["rating_avg"] == pytest.approx(float(expected_rating))
     assert body["rating_count"] == expected_count
 
 

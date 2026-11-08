@@ -20,13 +20,16 @@ PROVIDER_QUERY = text(
         SELECT 1
         FROM services s
         WHERE s.provider_id = p.id
-          AND (:guests IS NULL OR :guests BETWEEN s.min_guests AND s.max_guests)
           AND (
-              :event_type IS NULL
+              CAST(:guests AS INTEGER) IS NULL
+              OR CAST(:guests AS INTEGER) BETWEEN s.min_guests AND s.max_guests
+          )
+          AND (
+              CAST(:event_type AS TEXT) IS NULL
               OR EXISTS (
                   SELECT 1
                   FROM service_event_types t
-                  WHERE t.service_id = s.id AND t.event_type = :event_type
+                  WHERE t.service_id = s.id AND t.event_type = CAST(:event_type AS TEXT)
               )
           )
     )
@@ -38,13 +41,16 @@ ELIGIBLE_SERVICES_QUERY = text(
     """
     SELECT s.provider_id, s.category, s.price_model, s.base_price_cop, s.min_guests
     FROM services s
-    WHERE (:guests IS NULL OR :guests BETWEEN s.min_guests AND s.max_guests)
+    WHERE (
+        CAST(:guests AS INTEGER) IS NULL
+        OR CAST(:guests AS INTEGER) BETWEEN s.min_guests AND s.max_guests
+    )
       AND (
-          :event_type IS NULL
+          CAST(:event_type AS TEXT) IS NULL
           OR EXISTS (
               SELECT 1
               FROM service_event_types t
-              WHERE t.service_id = s.id AND t.event_type = :event_type
+              WHERE t.service_id = s.id AND t.event_type = CAST(:event_type AS TEXT)
           )
       )
     ORDER BY s.category ASC, s.id ASC

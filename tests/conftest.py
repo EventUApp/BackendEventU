@@ -1,7 +1,15 @@
 import os
 
 # Base de datos aislada para las pruebas (antes de importar la app).
-os.environ["DATABASE_URL"] = "sqlite://"
+POSTGRES_TEST_URL = os.environ.get("DATABASE_URL")
+if POSTGRES_TEST_URL and POSTGRES_TEST_URL.startswith("postgresql"):
+    if os.environ.get("EVENTU_TEST_POSTGRES") != "1":
+        raise RuntimeError(
+            "EVENTU_TEST_POSTGRES=1 es obligatorio para habilitar pruebas Postgres destructivas."
+        )
+else:
+    POSTGRES_TEST_URL = None
+    os.environ["DATABASE_URL"] = "sqlite://"
 os.environ["RATE_LIMIT_PER_MINUTE"] = "0"
 os.environ["SEED_ON_STARTUP"] = "false"
 
@@ -15,11 +23,17 @@ from sqlalchemy.orm import Session  # noqa: E402
 
 
 def make_test_engine():  # type: ignore[no-untyped-def]
-    engine = create_engine("sqlite://", poolclass=StaticPool, connect_args={"check_same_thread": False})
+    if POSTGRES_TEST_URL is not None:
+        engine = create_engine(POSTGRES_TEST_URL, pool_pre_ping=True)
+        with engine.begin() as conn:
+            conn.exec_driver_sql("DROP SCHEMA public CASCADE")
+            conn.exec_driver_sql("CREATE SCHEMA public")
+    else:
+        engine = create_engine("sqlite://", poolclass=StaticPool, connect_args={"check_same_thread": False})
 
-    @event.listens_for(engine, "connect")
-    def _fk(dbapi_conn, _):  # type: ignore[no-untyped-def]
-        dbapi_conn.execute("PRAGMA foreign_keys = ON")
+        @event.listens_for(engine, "connect")
+        def _fk(dbapi_conn, _):  # type: ignore[no-untyped-def]
+            dbapi_conn.execute("PRAGMA foreign_keys = ON")
 
     cfg = Config("alembic.ini")
     with engine.begin() as conn:
@@ -30,7 +44,9 @@ def make_test_engine():  # type: ignore[no-untyped-def]
 
 @pytest.fixture()
 def engine():  # type: ignore[no-untyped-def]
-    return make_test_engine()
+    test_engine = make_test_engine()
+    yield test_engine
+    test_engine.dispose()
 
 
 @pytest.fixture()

@@ -28,7 +28,7 @@ def test_home_returns_categories_and_featured_provider_summary(client, session):
     expected_featured_ids = (
         session.execute(
             text(
-                "select id from v_providers where featured = 1 "
+                "select id from v_providers where featured "
                 "order by case when rating_avg is null then 1 else 0 end, rating_avg desc, id asc limit 6"
             )
         )
@@ -61,16 +61,14 @@ def test_home_returns_categories_and_featured_provider_summary(client, session):
 def test_home_featured_order_uses_identifier_to_break_rating_ties(client, session):
     load_seed(session)
     provider_ids = (
-        session.execute(text("select id from providers where featured = 1 order by id limit 2"))
-        .scalars()
-        .all()
+        session.execute(text("select id from providers where featured order by id limit 2")).scalars().all()
     )
     assert len(provider_ids) == 2
     first_id, second_id = provider_ids
     session.execute(text("delete from provider_reviews"))
-    session.execute(text("update providers set featured = 0"))
+    session.execute(text("update providers set featured = false"))
     session.execute(
-        text("update providers set featured = 1 where id in (:first_id, :second_id)"),
+        text("update providers set featured = true where id in (:first_id, :second_id)"),
         {"first_id": first_id, "second_id": second_id},
     )
     session.execute(
