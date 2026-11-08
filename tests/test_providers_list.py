@@ -353,7 +353,7 @@ def test_list_providers_uses_deterministic_sort_rules(client, session, sort):
 @pytest.mark.parametrize("sort", ["recomendados", "precio_asc", "precio_desc", "calificacion"])
 def test_list_providers_breaks_complete_sort_ties_by_id(client, session, sort):
     load_seed(session)
-    session.execute(text("update providers set featured = 0"))
+    session.execute(text("update providers set featured = false"))
     session.execute(text("delete from provider_reviews"))
     session.execute(text("update services set price_model = 'fijo', base_price_cop = 1000"))
     session.commit()
