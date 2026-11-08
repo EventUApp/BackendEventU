@@ -1,5 +1,7 @@
-from app.recomendador.domain.recomendar import recomendar
-from app.recomendador.domain.tipos import ServiceOption
+import random
+
+from app.recomendador.domain.recomendar import MODALITY_TARGET_PERCENT, recomendar
+from app.recomendador.domain.tipos import CATEGORIES, MODALITIES, ServiceOption
 
 
 def service(
@@ -158,3 +160,51 @@ def test_recomendar_informa_rubro_obligatorio_sin_servicios_elegibles():
         ("equilibrado", "sin_servicios"),
         ("premium", "sin_servicios"),
     ]
+
+
+def test_recomendar_propiedad_100_catalogos_aleatorios_semilla_fija():
+    rng = random.Random(20261107)
+    event_types = ("cumpleanos", "boda", "xv")
+
+    for case_number in range(100):
+        guests = rng.randint(1, 500)
+        event_type = rng.choice(event_types)
+        catalog = []
+        for service_number in range(rng.randint(0, 60)):
+            min_guests = rng.randint(1, 500)
+            catalog.append(
+                service(
+                    f"svc-{case_number:03}-{service_number:03}",
+                    rng.choice(CATEGORIES),
+                    rng.randint(1_000, 3_000_000),
+                    price_model=rng.choice(("fijo", "por_invitado")),
+                    min_guests=min_guests,
+                    max_guests=rng.randint(min_guests, 500),
+                    event_types=tuple(kind for kind in event_types if rng.random() < 0.5),
+                )
+            )
+        budget = rng.randint(1_000_000, 50_000_000)
+
+        recommendation = recomendar(budget, event_type, guests, catalog)
+
+        package_modalities = {package.modality for package in recommendation.packages}
+        unavailable_modalities = {item.modality for item in recommendation.unavailable}
+        assert package_modalities.isdisjoint(unavailable_modalities), f"case {case_number}"
+        assert package_modalities | unavailable_modalities == set(MODALITIES), f"case {case_number}"
+        for package in recommendation.packages:
+            target_cop = budget * MODALITY_TARGET_PERCENT[package.modality] // 100
+            assert package.total_cop == sum(item.cost_cop for item in package.items), (
+                f"case {case_number}: total mismatch"
+            )
+            assert package.total_cop <= target_cop <= budget, f"case {case_number}: budget exceeded"
+            assert package.remaining_cop == budget - package.total_cop, (
+                f"case {case_number}: remaining mismatch"
+            )
+            assert {item.service.category for item in package.items} >= {
+                "espacio",
+                "alimentacion",
+                "decoracion",
+            }, f"case {case_number}: missing mandatory category"
+        assert recomendar(budget, event_type, guests, catalog) == recommendation, (
+            f"case {case_number}: result is not deterministic"
+        )
