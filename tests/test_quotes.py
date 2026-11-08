@@ -215,7 +215,7 @@ def test_post_quotes_rejects_total_over_budget(client, session):
     assert response.json()["error"]["message"] == ("Ese cambio supera su presupuesto. Elija otra opción.")
 
 
-def test_post_quotes_rejects_services_that_are_not_eligible(client, session):
+def test_post_quotes_revalidates_service_capacity_when_guest_count_changes(client, session):
     load_seed(session)
     session.execute(
         text(
@@ -232,6 +232,18 @@ def test_post_quotes_rejects_services_that_are_not_eligible(client, session):
         )
     )
     session.commit()
+
+    initial_quote = client.post(
+        "/api/v1/quotes",
+        json={
+            "event_type": "boda",
+            "guests": 50,
+            "service_ids": ["svc-quote-ineligible"],
+        },
+    )
+
+    assert initial_quote.status_code == 200
+    assert initial_quote.json()["ineligible"] == []
 
     response = client.post(
         "/api/v1/quotes",
