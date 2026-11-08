@@ -134,6 +134,53 @@ def test_list_providers_validates_query_ranges(client):
     assert {"guests", "page", "page_size"}.issubset(error["fields"])
 
 
+@pytest.mark.parametrize(
+    ("params", "field"),
+    [
+        ({"event_type": "anniversary"}, "event_type"),
+        ({"event_type": ""}, "event_type"),
+        ({"guests": 0}, "guests"),
+        ({"guests": 501}, "guests"),
+    ],
+)
+def test_list_providers_rejects_invalid_search_criteria(client, params, field):
+    response = client.get("/api/v1/providers", params=params)
+
+    assert response.status_code == 422
+    error = response.json()["error"]
+    assert error["code"] == "VALIDATION_ERROR"
+    assert field in error["fields"]
+
+
+@pytest.mark.parametrize(("event_type", "guests"), [("cumpleanos", 1), ("boda", 500), ("xv", 80)])
+def test_list_providers_applies_valid_search_criteria(client, session, event_type, guests):
+    load_seed(session)
+
+    response = client.get(
+        "/api/v1/providers",
+        params={"event_type": event_type, "guests": guests, "page_size": 50},
+    )
+
+    assert response.status_code == 200
+    expected_ids = set(
+        session.execute(
+            text(
+                """
+                SELECT DISTINCT s.provider_id
+                FROM services s
+                JOIN service_event_types t ON t.service_id = s.id
+                WHERE t.event_type = :event_type
+                  AND :guests BETWEEN s.min_guests AND s.max_guests
+                """
+            ),
+            {"event_type": event_type, "guests": guests},
+        ).scalars()
+    )
+    body = response.json()
+    assert body["total"] == len(expected_ids)
+    assert {item["id"] for item in body["items"]} == expected_ids
+
+
 def test_list_providers_applies_combined_filters(client, session):
     load_seed(session)
 
