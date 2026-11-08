@@ -1,3 +1,5 @@
+import pytest
+
 from seed.load import load_seed
 
 
@@ -6,13 +8,22 @@ def test_list_providers_returns_summaries_and_default_page(client, session):
 
     response = client.get("/api/v1/providers")
 
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
     body = response.json()
     assert body["total"] == 16
     assert body["page"] == 1
     assert body["page_size"] == 10
     assert len(body["items"]) == 10
-    assert [item["id"] for item in body["items"]] == sorted(item["id"] for item in body["items"])
+    keys = [
+        (
+            not item["featured"],
+            item["rating_avg"] is None,
+            -(item["rating_avg"] or 0),
+            item["id"],
+        )
+        for item in body["items"]
+    ]
+    assert keys == sorted(keys)
     item = body["items"][0]
     assert set(item) == {
         "id",
@@ -39,7 +50,7 @@ def test_list_providers_uses_guest_eligibility_and_guest_based_price(client, ses
 
     response = client.get("/api/v1/providers", params={"guests": 100, "page_size": 50})
 
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
     body = response.json()
     providers = {item["id"]: item for item in body["items"]}
     assert "prv-salon-los-guaduales" in providers
@@ -86,3 +97,124 @@ def test_list_providers_validates_query_ranges(client):
     error = response.json()["error"]
     assert error["code"] == "VALIDATION_ERROR"
     assert {"guests", "page", "page_size"}.issubset(error["fields"])
+
+
+def test_list_providers_applies_combined_filters(client, session):
+    load_seed(session)
+
+    response = client.get(
+        "/api/v1/providers",
+        params={
+            "category": "espacio",
+            "event_type": "boda",
+            "guests": 100,
+            "min_price_cop": 1_000_000,
+            "max_price_cop": 5_000_000,
+            "min_rating": 4,
+            "verified": True,
+            "sort": "precio_asc",
+            "page_size": 50,
+        },
+    )
+
+    assert response.status_code == 200, response.json()
+    body = response.json()
+    assert body["total"] == len(body["items"])
+    assert body["items"]
+    assert all("espacio" in provider["categories"] for provider in body["items"])
+    assert all(
+        provider["rating_avg"] is not None and provider["rating_avg"] >= 4 for provider in body["items"]
+    )
+    assert all(provider["verification_status"] == "verificado" for provider in body["items"])
+    assert all(1_000_000 <= provider["price_from_cop"] <= 5_000_000 for provider in body["items"])
+    assert [provider["price_from_cop"] for provider in body["items"]] == sorted(
+        provider["price_from_cop"] for provider in body["items"]
+    )
+
+
+def test_list_providers_rejects_minimum_price_greater_than_maximum(client):
+    response = client.get(
+        "/api/v1/providers",
+        params={"min_price_cop": 2_000_000, "max_price_cop": 1_000_000},
+    )
+
+    assert response.status_code == 422
+    assert response.json()["error"]["message"] == "El precio mínimo no puede ser mayor que el máximo."
+
+
+def test_list_providers_requires_integer_price_filters(client):
+    response = client.get("/api/v1/providers", params={"min_price_cop": "1000.5"})
+
+    assert response.status_code == 422
+    error = response.json()["error"]
+    assert error["code"] == "VALIDATION_ERROR"
+    assert "min_price_cop" in error["fields"]
+
+
+@pytest.mark.parametrize("min_rating", [3, 4, 4.5])
+def test_list_providers_accepts_proposed_rating_thresholds(client, session, min_rating):
+    load_seed(session)
+
+    response = client.get(
+        "/api/v1/providers",
+        params={"min_rating": min_rating, "page_size": 50},
+    )
+
+    assert response.status_code == 200
+    items = response.json()["items"]
+    assert items
+    assert all(item["rating_avg"] is not None and item["rating_avg"] >= min_rating for item in items)
+
+
+@pytest.mark.parametrize("sort", ["recomendados", "precio_asc", "precio_desc", "calificacion"])
+def test_list_providers_uses_deterministic_sort_rules(client, session, sort):
+    load_seed(session)
+
+    response = client.get("/api/v1/providers", params={"sort": sort, "page_size": 50})
+
+    assert response.status_code == 200
+    items = response.json()["items"]
+    if sort == "recomendados":
+        keys = [
+            (
+                not item["featured"],
+                item["rating_avg"] is None,
+                -(item["rating_avg"] or 0),
+                item["id"],
+            )
+            for item in items
+        ]
+    elif sort == "precio_asc":
+        keys = [(item["price_from_cop"], item["id"]) for item in items]
+    elif sort == "precio_desc":
+        keys = [(-item["price_from_cop"], item["id"]) for item in items]
+    else:
+        keys = [
+            (
+                item["rating_avg"] is None,
+                -(item["rating_avg"] or 0),
+                -item["rating_count"],
+                item["id"],
+            )
+            for item in items
+        ]
+    assert keys == sorted(keys)
+
+
+def test_list_providers_validates_filter_values(client):
+    response = client.get(
+        "/api/v1/providers",
+        params={"category": "unknown", "sort": "nearest"},
+    )
+
+    assert response.status_code == 422
+    error = response.json()["error"]
+    assert error["code"] == "VALIDATION_ERROR"
+    assert {"category", "sort"}.issubset(error["fields"])
+
+    response = client.get("/api/v1/providers", params={"min_rating": 3.5})
+
+    assert response.status_code == 422
+    error = response.json()["error"]
+    assert error["code"] == "VALIDATION_ERROR"
+    assert "min_rating" in error["fields"]
