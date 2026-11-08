@@ -50,3 +50,23 @@ Los valores marcados «Propuesto» son simulados y se validan después: implemé
 | 03_09 | `reservas` | `POST /reservations` (modality `personalizado`), `POST /reservations/{code}/cancel` |
 | 03_10 | `pagos` | `POST /payments` |
 | 03_11 | `reservas` | `GET /reservations/{code}` |
+
+## Flujo de Git (lo hace el agente al terminar cada tarea)
+Aplica cuando el usuario pide implementar una tarea `T_HU_…` (por ejemplo desde `prompts/T_HU_EU_01_12_2.md`).
+
+1. **Rama.** Antes de editar, mire la rama actual (`git branch --show-current`).
+   - Nunca trabaje ni haga commit en `main`.
+   - Cree la rama desde `main` actualizado (`git checkout main && git pull`) con el nombre `hu/EU_<sprint>_<n>_<k>-<tema>`: el identificador de la tarea sin el prefijo `T_HU_` y un tema corto en minúsculas, sin tildes, separado por guiones (máximo 4 palabras).
+   - Ejemplos: `T_HU_EU_01_12_2` (GET /home) → `hu/EU_01_12_2-get-home`; `T_HU_EU_02_05_2` (pantalla Resultados) → `hu/EU_02_05_2-pantalla-resultados`.
+   - Si ya está en una rama de esa misma tarea, sígala usando.
+2. **Antes del commit.** Corra `make check`; debe estar en verde. Complete la fila de `docs/bitacora-prompts.md`. Compruebe con `git status --short` que solo cambiaron archivos de la tarea y que no hay `.env`, bases de datos, claves ni cachés.
+3. **Commit.** Agregue solo los archivos de la tarea por nombre (no use `git add .` ni `git add -A`). Mensaje:
+   `T_HU_EU_01_12_2: <qué se hizo en una línea, en español, en imperativo>`
+   Un commit por tarea; si la tarea es grande, varios commits con el mismo prefijo.
+4. **Push.** `git push -u origin <rama>`. Nunca haga push a `main`, nunca use `--force`.
+5. **Pull Request.** Si `gh` está instalado y autenticado, abra el PR hacia `main` con `gh pr create`:
+   - Título: `T_HU_EU_01_12_2: <descripción>`.
+   - Descripción: criterios de aceptación con su estado, archivos cambiados, resultado de `make check`, supuestos y dudas abiertas.
+   Si `gh` no está disponible, imprima el enlace o el texto sugerido del PR y diga que falta abrirlo a mano.
+6. **No haga** merge, no borre ramas, no cambie la configuración de GitHub ni de Render. El merge lo hace David tras revisar.
+7. Termine informando: nombre de la rama, hash del commit y URL del PR (si se creó).
