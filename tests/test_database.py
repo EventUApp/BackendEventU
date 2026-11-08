@@ -187,11 +187,11 @@ def test_rating_is_derived_from_reviews(session):
     avg, cnt = session.execute(
         text("select rating_avg, rating_count from v_providers where id='prv-salon-los-guaduales'")
     ).one()
-    assert cnt == 3 and avg == pytest.approx(4.7, abs=0.05)
+    assert cnt == 3 and float(avg) == pytest.approx(4.7, abs=0.05)
     expected = session.execute(
         text("select round(avg(rating),1) from provider_reviews where provider_id='prv-salon-los-guaduales'")
     ).scalar()
-    assert avg == pytest.approx(float(expected))
+    assert float(avg) == pytest.approx(float(expected))
 
 
 def test_geo_columns_all_or_nothing(session):

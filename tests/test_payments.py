@@ -5,13 +5,14 @@ import pytest
 from sqlalchemy import inspect, text
 
 from app.pagos.gateway import APPROVED_TEST_CARD, DECLINED_TEST_CARD
-from app.reservas.models import Reservation
+from app.reservas.models import Reservation, ReservationItem
 
 
 def _create_reservation(session, code: str = "EU-PAY001", status: str = "creada") -> None:
+    reservation_id = str(uuid.uuid4())
     session.add(
         Reservation(
-            id=str(uuid.uuid4()),
+            id=reservation_id,
             code=code,
             status=status,
             event_type="boda",
@@ -23,6 +24,18 @@ def _create_reservation(session, code: str = "EU-PAY001", status: str = "creada"
             customer_email="cliente@example.invalid",
             customer_phone="3001234567",
             event_date=date(2027, 1, 10),
+        )
+    )
+    session.add(
+        ReservationItem(
+            reservation_id=reservation_id,
+            category="espacio",
+            service_id=None,
+            service_name="Espacio de prueba",
+            provider_name="Proveedor de prueba",
+            price_model="fijo",
+            unit_price_cop=125_000,
+            cost_cop=125_000,
         )
     )
     session.commit()
