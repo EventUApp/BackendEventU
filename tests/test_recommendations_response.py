@@ -122,9 +122,17 @@ def test_post_recommendations_maps_domain_packages_and_unavailable(client, sessi
     for package in body["packages"]:
         items = [item for category in package["breakdown"] for item in category["items"]]
         assert package["total_cop"] == sum(item["cost_cop"] for item in items)
+        assert package["total_cop"] <= 2_500_000
         assert package["remaining_cop"] == 2_500_000 - package["total_cop"]
+        assert {
+            "espacio",
+            "alimentacion",
+            "decoracion",
+        }.issubset({category["category"] for category in package["breakdown"]})
         for category in package["breakdown"]:
             assert category["subtotal_cop"] == sum(item["cost_cop"] for item in category["items"])
+            assert isinstance(category["subtotal_cop"], int)
+            assert all(isinstance(item["cost_cop"], int) for item in category["items"])
 
     first_package = body["packages"][0]
     assert [category["category"] for category in first_package["breakdown"]] == [
@@ -145,6 +153,13 @@ def test_post_recommendations_maps_domain_packages_and_unavailable(client, sessi
     package_with_optional_category = body["packages"][1]
     assert package_with_optional_category["breakdown"][-1]["category"] == "entretenimiento"
 
+    repeated_response = client.post(
+        "/api/v1/recommendations",
+        json={"budget_cop": 2_500_000, "event_type": "boda", "guests": 70},
+    )
+    assert repeated_response.status_code == 200
+    assert repeated_response.json() == body
+
     monkeypatch.setattr(
         "app.recomendador.service.recomendar",
         lambda *_: Recommendation((), (Unavailable("premium", "sin_servicios"),)),
@@ -157,4 +172,24 @@ def test_post_recommendations_maps_domain_packages_and_unavailable(client, sessi
     assert unavailable_response.json() == {
         "packages": [],
         "unavailable": [{"modality": "premium", "cause": "sin_servicios"}],
+    }
+
+
+def test_post_recommendations_returns_generic_error_when_recommender_fails(client, monkeypatch):
+    def fail(*_args: object) -> Recommendation:
+        raise RuntimeError("internal implementation detail")
+
+    monkeypatch.setattr("app.recomendador.service.recomendar", fail)
+
+    response = client.post(
+        "/api/v1/recommendations",
+        json={"budget_cop": 2_500_000, "event_type": "boda", "guests": 70},
+    )
+
+    assert response.status_code == 500
+    assert response.json() == {
+        "error": {
+            "code": "INTERNAL_ERROR",
+            "message": "No fue posible completar la operación. Intente nuevamente.",
+        }
     }
