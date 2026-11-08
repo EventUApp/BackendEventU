@@ -41,3 +41,18 @@ class RecommendationUnavailableResponse(BaseModel):
 class RecommendationResponse(BaseModel):
     packages: list[RecommendationPackageResponse]
     unavailable: list[RecommendationUnavailableResponse]
+
+
+class QuoteInput(BaseModel):
+    budget_cop: int | None = Field(default=None, ge=1_000_000, le=50_000_000)
+    event_type: Literal["cumpleanos", "boda", "xv"]
+    guests: int = Field(..., ge=1, le=500)
+    service_ids: list[str]
+
+
+class QuoteResponse(BaseModel):
+    total_cop: int
+    remaining_cop: int | None
+    breakdown: list[RecommendationBreakdownResponse]
+    missing_categories: list[str]
+    ineligible: list[str]
