@@ -47,10 +47,10 @@ def test_post_payments_approves_and_updates_reservation_without_storing_card(cli
     assert body["payment"]["amount_cop"] == 125_000
     assert body["payment"]["reference"].startswith("SIM-")
     assert body["reservation_status"] == "pagada"
+    assert set(body) == {"payment", "reservation_status"}
+    assert set(body["payment"]) == {"status", "amount_cop", "reference"}
     payment_columns = {column["name"] for column in inspect(session.bind).get_columns("payments")}
-    assert not any(
-        token in column for column in payment_columns for token in ("card", "number", "expiry", "cvv")
-    )
+    assert payment_columns == {"id", "reservation_id", "status", "amount_cop", "reference", "created_at"}
     stored_payment = session.execute(text("select status, amount_cop, reference from payments")).one()
     assert stored_payment.status == "aprobado"
     assert stored_payment.amount_cop == 125_000
@@ -173,6 +173,7 @@ def test_post_payments_does_not_create_multiple_approved_payments(client, sessio
     assert second.status_code == 409
     assert second.json()["error"]["code"] == "ALREADY_PAID"
     assert session.execute(text("select count(*) from payments where status = 'aprobado'")).scalar_one() == 1
+    assert session.execute(text("select count(*) from payments")).scalar_one() == 1
 
 
 def test_payment_attempts_never_log_sensitive_card_values(client, session, caplog):
