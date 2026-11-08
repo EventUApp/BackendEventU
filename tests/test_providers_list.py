@@ -59,6 +59,26 @@ def test_list_providers_uses_guest_eligibility_and_guest_based_price(client, ses
     assert "prv-terraza-san-antonio" not in providers
     assert providers["prv-salon-los-guaduales"]["price_from_cop"] == 1_600_000
     assert providers["prv-sabor-valluno"]["price_from_cop"] == 1_400_000
+    expected_prices = dict(
+        session.execute(
+            text(
+                """
+                SELECT provider_id,
+                       MIN(CASE WHEN price_model = 'por_invitado'
+                                THEN base_price_cop * :guests
+                                ELSE base_price_cop END) AS price_from_cop
+                FROM services
+                WHERE :guests BETWEEN min_guests AND max_guests
+                GROUP BY provider_id
+                """
+            ),
+            {"guests": 100},
+        ).all()
+    )
+    assert set(providers) == set(expected_prices)
+    assert {
+        provider_id: provider["price_from_cop"] for provider_id, provider in providers.items()
+    } == expected_prices
 
 
 def test_list_providers_uses_minimum_capacity_for_per_guest_price_without_guests(client, session):
@@ -77,11 +97,25 @@ def test_list_providers_paginates_without_duplicates(client, session):
     first_page = client.get("/api/v1/providers", params={"page": 1, "page_size": 10}).json()
     second_page = client.get("/api/v1/providers", params={"page": 2, "page_size": 10}).json()
 
-    first_ids = {item["id"] for item in first_page["items"]}
-    second_ids = {item["id"] for item in second_page["items"]}
+    first_ids = [item["id"] for item in first_page["items"]]
+    second_ids = [item["id"] for item in second_page["items"]]
     assert first_page["total"] == second_page["total"] == 16
+    assert first_page["page"] == 1
+    assert second_page["page"] == 2
+    assert first_page["page_size"] == second_page["page_size"] == 10
+    assert len(first_ids) == 10
     assert len(second_page["items"]) == 6
-    assert first_ids.isdisjoint(second_ids)
+    assert set(first_ids).isdisjoint(second_ids)
+    assert len(first_ids + second_ids) == first_page["total"]
+
+
+def test_list_providers_returns_empty_page_when_filters_match_no_providers(client, session):
+    load_seed(session)
+
+    response = client.get("/api/v1/providers", params={"max_price_cop": 0})
+
+    assert response.status_code == 200
+    assert response.json() == {"items": [], "total": 0, "page": 1, "page_size": 10}
 
 
 def test_list_providers_returns_empty_page_when_catalog_is_empty(client):
