@@ -205,6 +205,25 @@ def test_list_providers_bbox_excludes_providers_without_coordinates(client, sess
     assert response.json()["total"] == 0
 
 
+def test_list_providers_without_bbox_includes_provider_without_coordinates(client, session):
+    load_seed(session)
+    session.execute(
+        text("update providers set latitude = null, longitude = null where id = :id"),
+        {"id": "prv-salon-los-guaduales"},
+    )
+    session.commit()
+
+    response = client.get(
+        "/api/v1/providers",
+        params={"page_size": 50},
+    )
+
+    assert response.status_code == 200
+    provider = next(item for item in response.json()["items"] if item["id"] == "prv-salon-los-guaduales")
+    assert provider["latitude"] is None
+    assert provider["longitude"] is None
+
+
 def test_list_providers_combines_bbox_with_existing_filters_and_sort(client, session):
     load_seed(session)
 
