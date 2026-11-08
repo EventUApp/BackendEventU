@@ -108,7 +108,7 @@ def get_home_data(session: Session | None = None) -> dict[str, Any]:
                     WHERE s.provider_id = p.id
                 ) AS price_from_cop
             FROM v_providers p
-            WHERE p.featured = 1
+            WHERE p.featured
             ORDER BY
                 CASE WHEN p.rating_avg IS NULL THEN 1 ELSE 0 END ASC,
                 p.rating_avg DESC,
