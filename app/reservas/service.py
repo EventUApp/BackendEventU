@@ -11,12 +11,20 @@ from sqlalchemy.orm import Session
 from app.catalogo.service import EligibleService, get_eligible_services
 from app.errors import AppError
 from app.reservas.models import Reservation, ReservationItem
-from app.reservas.repository import reservation_code_exists, save_reservation
+from app.reservas.repository import (
+    get_approved_payment,
+    get_reservation_by_code,
+    get_reservation_items,
+    reservation_code_exists,
+    save_reservation,
+)
 from app.reservas.schemas import (
+    ReservationConfirmationResponse,
     ReservationCustomerInput,
     ReservationCustomerResponse,
     ReservationInput,
     ReservationItemResponse,
+    ReservationPaymentResponse,
     ReservationResponse,
 )
 from app.shared.money import cost_for_guests
@@ -137,3 +145,42 @@ def create_reservation(payload: ReservationInput, session: Session) -> Reservati
         return _response(reservation, payload.customer, payload.event_date, services, costs)
 
     raise AppError("INTERNAL_ERROR", "No fue posible completar la operación. Intente nuevamente.", 500)
+
+
+def get_reservation_confirmation(code: str, session: Session) -> ReservationConfirmationResponse:
+    reservation = get_reservation_by_code(session, code)
+    if reservation is None:
+        raise AppError("NOT_FOUND", "No encontramos una reserva con ese número.", 404)
+    if reservation.status != "pagada":
+        raise AppError("INVALID_STATE", "La reserva aún no está pagada.")
+
+    payment = get_approved_payment(session, reservation.id)
+    if payment is None:
+        raise AppError("INVALID_STATE", "La reserva aún no está pagada.")
+
+    items = get_reservation_items(session, reservation.id)
+    return ReservationConfirmationResponse(
+        code=reservation.code,
+        status=reservation.status,
+        modality=reservation.modality,
+        total_cop=reservation.total_cop,
+        items=[
+            ReservationItemResponse(
+                service_id=item.service_id,
+                category=item.category,
+                service_name=item.service_name,
+                provider_name=item.provider_name,
+                price_model=item.price_model,
+                unit_price_cop=item.unit_price_cop,
+                cost_cop=item.cost_cop,
+            )
+            for item in items
+        ],
+        customer=ReservationCustomerResponse(
+            name=reservation.customer_name,
+            email=reservation.customer_email,
+            phone=reservation.customer_phone,
+        ),
+        event_date=reservation.event_date,
+        payment=ReservationPaymentResponse(status=payment.status, reference=payment.reference),
+    )

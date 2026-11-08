@@ -11,6 +11,7 @@ EMAIL_PATTERN = re.compile(
     r"(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,63}$"
 )
 PHONE_PATTERN = re.compile(r"^[0-9]{10}$")
+RESERVATION_CODE_PATTERN = r"^EU-[A-Za-z0-9]{6}$"
 
 
 class ReservationCustomerInput(BaseModel):
@@ -66,7 +67,7 @@ class ReservationCustomerResponse(BaseModel):
 
 
 class ReservationItemResponse(BaseModel):
-    service_id: str
+    service_id: str | None
     category: str
     service_name: str
     provider_name: str
@@ -82,3 +83,19 @@ class ReservationResponse(BaseModel):
     items: list[ReservationItemResponse]
     customer: ReservationCustomerResponse
     event_date: date
+
+
+class ReservationPaymentResponse(BaseModel):
+    status: str
+    reference: str
+
+
+class ReservationConfirmationResponse(BaseModel):
+    code: str
+    status: str
+    modality: str
+    total_cop: int
+    items: list[ReservationItemResponse]
+    customer: ReservationCustomerResponse
+    event_date: date
+    payment: ReservationPaymentResponse
