@@ -26,6 +26,11 @@ RESERVATION_VALIDATION_MESSAGES = {
     "customer.phone": "Ingrese un teléfono de 10 dígitos.",
     "event_date": "Seleccione una fecha posterior a hoy.",
 }
+PAYMENT_VALIDATION_MESSAGES = {
+    "card.number": "Ingrese un número de tarjeta válido.",
+    "card.expiry": "Ingrese una fecha de vencimiento válida.",
+    "card.cvv": "Ingrese el código de seguridad.",
+}
 
 
 class AppError(Exception):
@@ -58,7 +63,10 @@ def register_error_handlers(app: FastAPI) -> None:
             loc = [str(p) for p in err["loc"] if p not in ("body", "query", "path")]
             field = ".".join(loc) or "request"
             fields[field] = RESERVATION_VALIDATION_MESSAGES.get(
-                field, VALIDATION_MESSAGES.get(str(err["type"]), GENERIC_VALIDATION_MESSAGE)
+                field,
+                PAYMENT_VALIDATION_MESSAGES.get(
+                    field, VALIDATION_MESSAGES.get(str(err["type"]), GENERIC_VALIDATION_MESSAGE)
+                ),
             )
         return JSONResponse(
             error_body("VALIDATION_ERROR", "Revise los datos ingresados.", fields), status_code=422
