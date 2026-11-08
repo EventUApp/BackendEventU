@@ -1,5 +1,5 @@
 import uuid
-from datetime import date
+from datetime import date, timedelta
 
 from sqlalchemy import text
 
@@ -135,12 +135,45 @@ def test_provider_detail_includes_gallery_and_review_summary(client, session):
     body = response.json()
     assert body["images"]
     assert body["images"][0]["url"].startswith("https://")
-    assert body["rating_avg"] == 4.7
-    assert body["rating_count"] == 3
+    expected_rating, expected_count = session.execute(
+        text("select round(avg(rating), 1), count(*) from provider_reviews where provider_id = :provider_id"),
+        {"provider_id": "prv-salon-los-guaduales"},
+    ).one()
+    assert body["rating_avg"] == expected_rating == 4.7
+    assert body["rating_count"] == expected_count == 3
     assert len(body["reviews"]) <= 5
-    assert body["reviews"] == sorted(
-        body["reviews"], key=lambda review: (review["reviewed_on"], review["author_name"]), reverse=True
+    assert all(
+        review["author_name"] and 1 <= review["rating"] <= 5 and review["comment"]
+        for review in body["reviews"]
     )
+
+
+def test_provider_detail_rounds_review_average_to_one_decimal(client, session):
+    load_seed(session)
+    session.execute(
+        text("update provider_reviews set rating = 4 where provider_id = :provider_id"),
+        {"provider_id": "prv-salon-los-guaduales"},
+    )
+    session.execute(
+        text(
+            "update provider_reviews set rating = 5 where id = "
+            "(select id from provider_reviews where provider_id = :provider_id "
+            "order by id limit 1)"
+        ),
+        {"provider_id": "prv-salon-los-guaduales"},
+    )
+    session.commit()
+
+    response = client.get("/api/v1/providers/prv-salon-los-guaduales")
+
+    assert response.status_code == 200
+    body = response.json()
+    expected_rating = session.execute(
+        text("select round(avg(rating), 1) from provider_reviews where provider_id = :provider_id"),
+        {"provider_id": "prv-salon-los-guaduales"},
+    ).scalar_one()
+    assert expected_rating == 4.3
+    assert body["rating_avg"] == expected_rating
 
 
 def test_provider_detail_gallery_matches_list_cover_photo(client, session):
@@ -157,6 +190,7 @@ def test_provider_detail_gallery_matches_list_cover_photo(client, session):
 
 def test_provider_detail_returns_only_five_newest_reviews(client, session):
     load_seed(session)
+    today = date.today()
     session.execute(
         text(
             "insert into provider_reviews "
@@ -170,7 +204,7 @@ def test_provider_detail_returns_only_five_newest_reviews(client, session):
                 "author_name": "Reseña reciente",
                 "rating": 5,
                 "comment": "Reseña de ejemplo",
-                "reviewed_on": date(2026, 11, 7),
+                "reviewed_on": today,
             },
             {
                 "id": str(uuid.uuid4()),
@@ -178,7 +212,7 @@ def test_provider_detail_returns_only_five_newest_reviews(client, session):
                 "author_name": "Reseña siguiente",
                 "rating": 4,
                 "comment": "Reseña de ejemplo",
-                "reviewed_on": date(2026, 11, 6),
+                "reviewed_on": today - timedelta(days=1),
             },
         ],
     )
@@ -191,7 +225,26 @@ def test_provider_detail_returns_only_five_newest_reviews(client, session):
     review_dates = [review["reviewed_on"] for review in body["reviews"]]
     assert len(body["reviews"]) == 5
     assert review_dates == sorted(review_dates, reverse=True)
-    assert review_dates[:2] == ["2026-11-07", "2026-11-06"]
+    assert review_dates[:2] == [
+        today.isoformat(),
+        (today - timedelta(days=1)).isoformat(),
+    ]
+    expected_reviews = session.execute(
+        text(
+            "select author_name, rating, comment, reviewed_on from provider_reviews "
+            "where provider_id = :provider_id order by reviewed_on desc, id asc limit 5"
+        ),
+        {"provider_id": "prv-salon-los-guaduales"},
+    ).all()
+    assert body["reviews"] == [
+        {
+            "author_name": review.author_name,
+            "rating": review.rating,
+            "comment": review.comment,
+            "reviewed_on": str(review.reviewed_on),
+        }
+        for review in expected_reviews
+    ]
     expected_rating, expected_count = session.execute(
         text(
             "select round(avg(rating), 1), count(*) "
