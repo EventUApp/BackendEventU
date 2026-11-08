@@ -45,6 +45,9 @@ def test_post_recommendations_rejects_missing_or_invalid_fields(client, body, in
     assert error["code"] == "VALIDATION_ERROR"
     assert error["message"] == "Revise los datos ingresados."
     assert invalid_field in error["fields"]
+    assert error["fields"][invalid_field]
+    assert "Input should" not in error["fields"][invalid_field]
+    assert "greater than" not in error["fields"][invalid_field]
 
 
 def test_unexpected_error_returns_generic_message(client):

@@ -11,6 +11,15 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 logger = logging.getLogger("eventu")
 
 GENERIC_MESSAGE = "No fue posible completar la operación. Intente nuevamente."
+VALIDATION_MESSAGES = {
+    "missing": "Este campo es obligatorio.",
+    "int_parsing": "Ingrese un número entero.",
+    "int_type": "Ingrese un número entero.",
+    "greater_than_equal": "El valor está por debajo del mínimo permitido.",
+    "less_than_equal": "El valor supera el máximo permitido.",
+    "literal_error": "Seleccione una opción válida.",
+}
+GENERIC_VALIDATION_MESSAGE = "Revise el valor ingresado."
 
 
 class AppError(Exception):
@@ -41,7 +50,9 @@ def register_error_handlers(app: FastAPI) -> None:
         fields: dict[str, str] = {}
         for err in exc.errors():
             loc = [str(p) for p in err["loc"] if p not in ("body", "query", "path")]
-            fields[".".join(loc) or "request"] = str(err["msg"])
+            fields[".".join(loc) or "request"] = VALIDATION_MESSAGES.get(
+                str(err["type"]), GENERIC_VALIDATION_MESSAGE
+            )
         return JSONResponse(
             error_body("VALIDATION_ERROR", "Revise los datos ingresados.", fields), status_code=422
         )
