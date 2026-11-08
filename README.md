@@ -13,6 +13,26 @@ make check
 
 Despliegue en Render: ver `render.yaml` (Propuesto). Pegue `DATABASE_URL` en el panel, no en el repo.
 
+## Documentación de la API
+
+En desarrollo, abre `http://localhost:8000/docs` para explorar y probar los endpoints.
+La especificación OpenAPI está disponible en `http://localhost:8000/openapi.json`.
+En producción, la interfaz `/docs` está deshabilitada, pero la especificación JSON se
+puede consultar en `https://<servicio>.onrender.com/openapi.json`.
+
+Todos los endpoints usan el prefijo `/api/v1`. Entre los principales:
+
+| Método | Endpoint | Descripción |
+|---|---|---|
+| `POST` | `/api/v1/recommendations` | Genera paquetes sugeridos a partir del presupuesto. |
+| `POST` | `/api/v1/quotes` | Calcula una cotización desde los identificadores de servicio seleccionados. |
+| `POST` | `/api/v1/reservations` | Revalida el total y registra una reserva desde los servicios seleccionados. |
+| `POST` | `/api/v1/payments` | Procesa un pago simulado de una reserva. |
+| `GET` | `/api/v1/reservations/{code}` | Consulta el estado y resumen de una reserva. |
+
+El contrato completo —parámetros, cuerpos, respuestas y errores— está en
+[`docs/20261105_SAD_EU.md`, §7.1](docs/20261105_SAD_EU.md#71-contrato-de-la-api).
+
 ## CI
 
 GitHub Actions ejecuta `make check` en cada pull request y en los cambios a `main`.
