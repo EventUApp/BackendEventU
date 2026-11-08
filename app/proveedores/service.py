@@ -5,12 +5,14 @@ from collections import defaultdict
 from sqlalchemy.engine import RowMapping
 from sqlalchemy.orm import Session
 
+from app.errors import AppError
 from app.proveedores.repository import get_eligible_providers
-from app.proveedores.schemas import ProviderListItem, ProviderListResponse
+from app.proveedores.schemas import ProviderListItem, ProviderListResponse, ProviderSort
 
 DEFAULT_PAGE_SIZE = 10
 MAX_PAGE_SIZE = 50
 CATEGORY_ORDER = ("espacio", "alimentacion", "decoracion", "entretenimiento")
+MINIMUM_RATINGS = (3.0, 4.0, 4.5)
 
 
 def _service_cost(service: RowMapping, guests: int | None) -> int:
@@ -24,9 +26,26 @@ def get_providers(
     session: Session,
     guests: int | None,
     event_type: str | None,
+    category: str | None,
+    min_price_cop: int | None,
+    max_price_cop: int | None,
+    min_rating: float | None,
+    verified: bool | None,
+    sort: ProviderSort,
     page: int,
     page_size: int,
 ) -> ProviderListResponse:
+    if min_price_cop is not None and max_price_cop is not None and min_price_cop > max_price_cop:
+        message = "El precio mínimo no puede ser mayor que el máximo."
+        raise AppError("VALIDATION_ERROR", message, 422, {"min_price_cop": message})
+    if min_rating is not None and min_rating not in MINIMUM_RATINGS:
+        raise AppError(
+            "VALIDATION_ERROR",
+            "Seleccione una calificación mínima válida.",
+            422,
+            {"min_rating": "Seleccione 3, 4 o 4,5."},
+        )
+
     providers, services = get_eligible_providers(session, guests, event_type)
     services_by_provider: dict[str, list[RowMapping]] = defaultdict(list)
     for service in services:
@@ -51,6 +70,40 @@ def get_providers(
                 verification_status=str(provider["verification_status"]),
                 price_from_cop=min(_service_cost(service, guests) for service in provider_services),
                 featured=bool(provider["featured"]),
+            )
+        )
+
+    if category is not None:
+        items = [item for item in items if category in item.categories]
+    if min_price_cop is not None:
+        items = [item for item in items if item.price_from_cop >= min_price_cop]
+    if max_price_cop is not None:
+        items = [item for item in items if item.price_from_cop <= max_price_cop]
+    if min_rating is not None:
+        items = [item for item in items if item.rating_avg is not None and item.rating_avg >= min_rating]
+    if verified:
+        items = [item for item in items if item.verification_status == "verificado"]
+
+    if sort == "precio_asc":
+        items.sort(key=lambda item: (item.price_from_cop, item.id))
+    elif sort == "precio_desc":
+        items.sort(key=lambda item: (-item.price_from_cop, item.id))
+    elif sort == "calificacion":
+        items.sort(
+            key=lambda item: (
+                item.rating_avg is None,
+                -(item.rating_avg or 0),
+                -item.rating_count,
+                item.id,
+            )
+        )
+    else:
+        items.sort(
+            key=lambda item: (
+                not item.featured,
+                item.rating_avg is None,
+                -(item.rating_avg or 0),
+                item.id,
             )
         )
 

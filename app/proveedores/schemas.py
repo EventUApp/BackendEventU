@@ -1,6 +1,11 @@
 """Esquemas de la lista de proveedores."""
 
+from typing import Literal
+
 from pydantic import BaseModel
+
+ProviderCategory = Literal["espacio", "alimentacion", "decoracion", "entretenimiento"]
+ProviderSort = Literal["recomendados", "precio_asc", "precio_desc", "calificacion"]
 
 
 class ProviderListItem(BaseModel):
