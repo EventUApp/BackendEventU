@@ -128,9 +128,24 @@ def test_list_providers_applies_combined_filters(client, session):
     )
     assert all(provider["verification_status"] == "verificado" for provider in body["items"])
     assert all(1_000_000 <= provider["price_from_cop"] <= 5_000_000 for provider in body["items"])
-    assert [provider["price_from_cop"] for provider in body["items"]] == sorted(
-        provider["price_from_cop"] for provider in body["items"]
+    assert [(provider["price_from_cop"], provider["id"]) for provider in body["items"]] == sorted(
+        (provider["price_from_cop"], provider["id"]) for provider in body["items"]
     )
+    eligible_ids = set(
+        session.execute(
+            text(
+                """
+                SELECT DISTINCT s.provider_id
+                FROM services s
+                JOIN service_event_types t ON t.service_id = s.id
+                WHERE s.category = 'espacio'
+                  AND t.event_type = 'boda'
+                  AND 100 BETWEEN s.min_guests AND s.max_guests
+                """
+            )
+        ).scalars()
+    )
+    assert {provider["id"] for provider in body["items"]} <= eligible_ids
 
 
 def test_list_providers_rejects_minimum_price_greater_than_maximum(client):
@@ -140,7 +155,11 @@ def test_list_providers_rejects_minimum_price_greater_than_maximum(client):
     )
 
     assert response.status_code == 422
-    assert response.json()["error"]["message"] == "El precio mínimo no puede ser mayor que el máximo."
+    error = response.json()["error"]
+    expected_message = "El precio mínimo no puede ser mayor que el máximo."
+    assert error["code"] == "VALIDATION_ERROR"
+    assert error["message"] == expected_message
+    assert error["fields"] == {"min_price_cop": expected_message}
 
 
 def test_list_providers_requires_integer_price_filters(client):
@@ -276,6 +295,22 @@ def test_list_providers_uses_deterministic_sort_rules(client, session, sort):
             for item in items
         ]
     assert keys == sorted(keys)
+
+
+@pytest.mark.parametrize("sort", ["recomendados", "precio_asc", "precio_desc", "calificacion"])
+def test_list_providers_breaks_complete_sort_ties_by_id(client, session, sort):
+    load_seed(session)
+    session.execute(text("update providers set featured = 0"))
+    session.execute(text("delete from provider_reviews"))
+    session.execute(text("update services set price_model = 'fijo', base_price_cop = 1000"))
+    session.commit()
+
+    response = client.get("/api/v1/providers", params={"sort": sort, "page_size": 50})
+
+    assert response.status_code == 200
+    ids = [provider["id"] for provider in response.json()["items"]]
+    assert len(ids) == 16
+    assert ids == sorted(ids)
 
 
 def test_list_providers_validates_filter_values(client):
