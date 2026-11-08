@@ -110,8 +110,8 @@ def get_home_data(session: Session | None = None) -> dict[str, Any]:
             FROM v_providers p
             WHERE p.featured = 1
             ORDER BY
+                CASE WHEN p.rating_avg IS NULL THEN 1 ELSE 0 END ASC,
                 p.rating_avg DESC,
-                p.rating_count DESC,
                 p.id ASC
             LIMIT 6
             """
