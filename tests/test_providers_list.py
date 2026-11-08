@@ -1,4 +1,5 @@
 import pytest
+from sqlalchemy import text
 
 from seed.load import load_seed
 
@@ -149,6 +150,82 @@ def test_list_providers_requires_integer_price_filters(client):
     error = response.json()["error"]
     assert error["code"] == "VALIDATION_ERROR"
     assert "min_price_cop" in error["fields"]
+
+
+def test_list_providers_filters_bbox_inclusively_and_returns_coordinates(client, session):
+    load_seed(session)
+
+    response = client.get(
+        "/api/v1/providers",
+        params={"bbox": "3.368,-76.538,3.368,-76.538", "page_size": 50},
+    )
+
+    assert response.status_code == 200, response.json()
+    body = response.json()
+    assert body["total"] == 1
+    assert body["items"][0]["id"] == "prv-salon-los-guaduales"
+    assert body["items"][0]["latitude"] == 3.368
+    assert body["items"][0]["longitude"] == -76.538
+
+
+def test_list_providers_bbox_excludes_providers_without_coordinates(client, session):
+    load_seed(session)
+    session.execute(
+        text("update providers set latitude = null, longitude = null where id = :id"),
+        {"id": "prv-salon-los-guaduales"},
+    )
+    session.commit()
+
+    response = client.get(
+        "/api/v1/providers",
+        params={"bbox": "3.368,-76.538,3.368,-76.538", "page_size": 50},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["items"] == []
+    assert response.json()["total"] == 0
+
+
+def test_list_providers_combines_bbox_with_existing_filters_and_sort(client, session):
+    load_seed(session)
+
+    response = client.get(
+        "/api/v1/providers",
+        params={
+            "bbox": "3.2,-76.6,3.5,-76.5",
+            "category": "espacio",
+            "sort": "precio_asc",
+            "page_size": 50,
+        },
+    )
+
+    assert response.status_code == 200
+    items = response.json()["items"]
+    assert items
+    assert all("espacio" in item["categories"] for item in items)
+    assert all(3.2 <= item["latitude"] <= 3.5 for item in items)
+    assert all(-76.6 <= item["longitude"] <= -76.5 for item in items)
+    assert [item["price_from_cop"] for item in items] == sorted(item["price_from_cop"] for item in items)
+
+
+@pytest.mark.parametrize(
+    "bbox",
+    [
+        "3.3,-76.6,3.4",
+        "north,-76.6,3.4,-76.5",
+        "91,-76.6,92,-76.5",
+        "3.3,-181,3.4,-180",
+        "3.4,-76.6,3.3,-76.5",
+        "3.3,-76.5,3.4,-76.6",
+    ],
+)
+def test_list_providers_validates_bbox(client, bbox):
+    response = client.get("/api/v1/providers", params={"bbox": bbox})
+
+    assert response.status_code == 422
+    error = response.json()["error"]
+    assert error["code"] == "VALIDATION_ERROR"
+    assert "bbox" in error["fields"]
 
 
 @pytest.mark.parametrize("min_rating", [3, 4, 4.5])
