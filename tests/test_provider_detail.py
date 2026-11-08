@@ -13,31 +13,79 @@ def test_get_provider_detail_returns_profile_verification_and_services(client, s
 
     assert response.status_code == 200
     body = response.json()
-    assert body["id"] == "prv-salon-los-guaduales"
-    assert body["name"] == "Salón Los Guaduales"
-    assert body["categories"] == ["espacio"]
-    assert body["description"]
-    assert body["neighborhood"] == "Ciudad Jardín"
-    assert body["municipality"] == "Cali"
-    assert body["phone"] and body["email"]
-    assert body["verification"]["status"] == "verificado"
-    assert body["verification"]["checks"]
-    assert all(check["type"] and check["date"] for check in body["verification"]["checks"])
-    assert body["services"]
-    service = body["services"][0]
     assert {
         "id",
         "name",
-        "category",
+        "categories",
         "description",
-        "price_model",
-        "unit_price_cop",
-        "min_guests",
-        "max_guests",
-        "level",
-    } == set(service)
-    assert service["unit_price_cop"] > 0
-    assert service["min_guests"] <= service["max_guests"]
+        "neighborhood",
+        "municipality",
+        "phone",
+        "email",
+        "latitude",
+        "longitude",
+        "images",
+        "rating_avg",
+        "rating_count",
+        "reviews",
+        "verification",
+        "services",
+    } == set(body)
+    assert body["id"] == "prv-salon-los-guaduales"
+    assert body["name"] == "Salón Los Guaduales"
+    assert body["categories"] == ["espacio"]
+    assert body["description"].strip()
+    assert body["neighborhood"] == "Ciudad Jardín"
+    assert body["municipality"] == "Cali"
+    assert body["phone"].strip() and body["email"].strip()
+    assert body["verification"]["status"] == "verificado"
+    assert body["verification"]["checks"]
+    expected_checks = session.execute(
+        text(
+            "select check_type, checked_on from provider_verifications "
+            "where provider_id = :provider_id order by checked_on, id"
+        ),
+        {"provider_id": body["id"]},
+    ).all()
+    assert [(check["type"], check["date"]) for check in body["verification"]["checks"]] == [
+        (check.check_type, str(check.checked_on)) for check in expected_checks
+    ]
+    assert body["services"]
+    expected_services = session.execute(
+        text(
+            "select id, name, category, description, price_model, base_price_cop, "
+            "min_guests, max_guests, level from services "
+            "where provider_id = :provider_id order by category, id"
+        ),
+        {"provider_id": body["id"]},
+    ).all()
+    assert len(body["services"]) == len(expected_services)
+    for service, expected in zip(body["services"], expected_services, strict=True):
+        assert set(service) == {
+            "id",
+            "name",
+            "category",
+            "description",
+            "price_model",
+            "unit_price_cop",
+            "min_guests",
+            "max_guests",
+            "level",
+        }
+        assert service == {
+            "id": expected.id,
+            "name": expected.name,
+            "category": expected.category,
+            "description": expected.description,
+            "price_model": expected.price_model,
+            "unit_price_cop": expected.base_price_cop,
+            "min_guests": expected.min_guests,
+            "max_guests": expected.max_guests,
+            "level": expected.level,
+        }
+        assert service["description"].strip()
+        assert service["unit_price_cop"] > 0
+        assert service["min_guests"] <= service["max_guests"]
 
 
 def test_provider_without_verification_checks_is_in_review(client, session):
@@ -46,7 +94,24 @@ def test_provider_without_verification_checks_is_in_review(client, session):
     response = client.get("/api/v1/providers/prv-terraza-san-antonio")
 
     assert response.status_code == 200
-    assert response.json()["verification"] == {"status": "en_revision", "checks": []}
+    verification = response.json()["verification"]
+    assert verification == {"status": "en_revision", "checks": []}
+    assert verification["status"] != "verificado"
+
+
+def test_provider_detail_status_is_verified_only_when_checks_exist(client, session):
+    load_seed(session)
+    provider_ids = session.execute(text("select id from providers order by id")).scalars().all()
+
+    for provider_id in provider_ids:
+        response = client.get(f"/api/v1/providers/{provider_id}")
+
+        assert response.status_code == 200
+        verification = response.json()["verification"]
+        if verification["checks"]:
+            assert verification["status"] == "verificado"
+        else:
+            assert verification["status"] == "en_revision"
 
 
 def test_get_unknown_provider_returns_not_found_message(client):
