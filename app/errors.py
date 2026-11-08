@@ -20,6 +20,12 @@ VALIDATION_MESSAGES = {
     "literal_error": "Seleccione una opción válida.",
 }
 GENERIC_VALIDATION_MESSAGE = "Revise el valor ingresado."
+RESERVATION_VALIDATION_MESSAGES = {
+    "customer.name": "Ingrese su nombre.",
+    "customer.email": "Ingrese un correo electrónico válido.",
+    "customer.phone": "Ingrese un teléfono de 10 dígitos.",
+    "event_date": "Seleccione una fecha posterior a hoy.",
+}
 
 
 class AppError(Exception):
@@ -50,8 +56,9 @@ def register_error_handlers(app: FastAPI) -> None:
         fields: dict[str, str] = {}
         for err in exc.errors():
             loc = [str(p) for p in err["loc"] if p not in ("body", "query", "path")]
-            fields[".".join(loc) or "request"] = VALIDATION_MESSAGES.get(
-                str(err["type"]), GENERIC_VALIDATION_MESSAGE
+            field = ".".join(loc) or "request"
+            fields[field] = RESERVATION_VALIDATION_MESSAGES.get(
+                field, VALIDATION_MESSAGES.get(str(err["type"]), GENERIC_VALIDATION_MESSAGE)
             )
         return JSONResponse(
             error_body("VALIDATION_ERROR", "Revise los datos ingresados.", fields), status_code=422

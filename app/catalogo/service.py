@@ -2,12 +2,58 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Any
 
-from sqlalchemy import text
+from sqlalchemy import bindparam, text
+from sqlalchemy.engine import RowMapping
 from sqlalchemy.orm import Session
 
 from app.shared.db import get_session
+
+
+@dataclass(frozen=True)
+class EligibleService:
+    id: str
+    category: str
+    name: str
+    provider_name: str
+    price_model: str
+    base_price_cop: int
+
+
+def get_eligible_services(
+    service_ids: list[str], event_type: str, guests: int, session: Session
+) -> tuple[EligibleService, ...]:
+    rows: list[RowMapping] = list(
+        session.execute(
+            text(
+                """
+                SELECT s.id, s.category, s.name, p.name AS provider_name,
+                       s.price_model, s.base_price_cop
+                FROM services s
+                JOIN providers p ON p.id = s.provider_id
+                JOIN service_event_types t ON t.service_id = s.id
+                WHERE s.id IN :service_ids
+                  AND t.event_type = :event_type
+                  AND :guests BETWEEN s.min_guests AND s.max_guests
+                ORDER BY s.id ASC
+                """
+            ).bindparams(bindparam("service_ids", expanding=True)),
+            {"service_ids": service_ids, "event_type": event_type, "guests": guests},
+        ).mappings()
+    )
+    return tuple(
+        EligibleService(
+            id=str(row["id"]),
+            category=str(row["category"]),
+            name=str(row["name"]),
+            provider_name=str(row["provider_name"]),
+            price_model=str(row["price_model"]),
+            base_price_cop=int(row["base_price_cop"]),
+        )
+        for row in rows
+    )
 
 
 def get_home_data(session: Session | None = None) -> dict[str, Any]:
