@@ -5,11 +5,21 @@ from typing import Annotated, Literal
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
+from app.proveedores.detail_schemas import ProviderDetailResponse
+from app.proveedores.detail_service import get_provider_detail
 from app.proveedores.schemas import ProviderCategory, ProviderListResponse, ProviderSort
 from app.proveedores.service import DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, get_providers
 from app.shared.db import get_session
 
 router = APIRouter()
+
+
+@router.get("/providers/{provider_id}", response_model=ProviderDetailResponse)
+def provider_detail(
+    provider_id: str,
+    db: Annotated[Session, Depends(get_session)],
+) -> ProviderDetailResponse:
+    return get_provider_detail(db, provider_id)
 
 
 @router.get("/providers", response_model=ProviderListResponse)
