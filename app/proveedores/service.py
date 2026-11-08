@@ -13,6 +13,31 @@ DEFAULT_PAGE_SIZE = 10
 MAX_PAGE_SIZE = 50
 CATEGORY_ORDER = ("espacio", "alimentacion", "decoracion", "entretenimiento")
 MINIMUM_RATINGS = (3.0, 4.0, 4.5)
+BBOX_VALIDATION_MESSAGE = "El área de búsqueda no es válida."
+
+
+def _parse_bbox(value: str | None) -> tuple[float, float, float, float] | None:
+    if value is None:
+        return None
+
+    try:
+        coordinates = tuple(float(part.strip()) for part in value.split(","))
+    except ValueError:
+        coordinates = ()
+
+    if (
+        len(coordinates) != 4
+        or not -90 <= coordinates[0] <= coordinates[2] <= 90
+        or not -180 <= coordinates[1] <= coordinates[3] <= 180
+    ):
+        raise AppError(
+            "VALIDATION_ERROR",
+            BBOX_VALIDATION_MESSAGE,
+            422,
+            {"bbox": BBOX_VALIDATION_MESSAGE},
+        )
+
+    return coordinates[0], coordinates[1], coordinates[2], coordinates[3]
 
 
 def _service_cost(service: RowMapping, guests: int | None) -> int:
@@ -34,7 +59,9 @@ def get_providers(
     sort: ProviderSort,
     page: int,
     page_size: int,
+    bbox: str | None = None,
 ) -> ProviderListResponse:
+    bounds = _parse_bbox(bbox)
     if min_price_cop is not None and max_price_cop is not None and min_price_cop > max_price_cop:
         message = "El precio mínimo no puede ser mayor que el máximo."
         raise AppError("VALIDATION_ERROR", message, 422, {"min_price_cop": message})
@@ -73,6 +100,16 @@ def get_providers(
             )
         )
 
+    if bounds is not None:
+        lat_min, lon_min, lat_max, lon_max = bounds
+        items = [
+            item
+            for item in items
+            if item.latitude is not None
+            and item.longitude is not None
+            and lat_min <= item.latitude <= lat_max
+            and lon_min <= item.longitude <= lon_max
+        ]
     if category is not None:
         items = [item for item in items if category in item.categories]
     if min_price_cop is not None:

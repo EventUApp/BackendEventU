@@ -35,6 +35,9 @@ def list_providers(
     sort: ProviderSort = "recomendados",
     page: Annotated[int, Query(ge=1)] = 1,
     page_size: Annotated[int, Query(ge=1, le=MAX_PAGE_SIZE)] = DEFAULT_PAGE_SIZE,
+    bbox: Annotated[
+        str | None, Query(description="lat_min,lon_min,lat_max,lon_max; límites inclusivos")
+    ] = None,
 ) -> ProviderListResponse:
     return get_providers(
         db,
@@ -48,4 +51,5 @@ def list_providers(
         sort,
         page,
         page_size,
+        bbox=bbox,
     )
