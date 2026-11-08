@@ -7,7 +7,7 @@ import pytest
 from sqlalchemy import inspect, select, text
 from sqlalchemy.exc import IntegrityError
 
-from app.catalogo.models import Provider, ProviderVerification
+from app.catalogo.models import Provider, ProviderImage, ProviderReview, ProviderVerification
 from app.shared.db import Base
 from seed.load import load_seed
 
@@ -69,6 +69,43 @@ def test_provider_verification_models_load_seed_and_derive_status(session):
     assert session.execute(
         text("select id from v_providers where verification_status = 'verificado' order by id")
     ).scalars().all() == sorted(verified_provider_ids)
+
+
+def test_provider_gallery_and_reviews_models_seed_and_rating_view(session):
+    load_seed(session)
+    seed = json.loads((Path(__file__).parent.parent / "seed" / "seed.json").read_text(encoding="utf-8"))
+
+    providers = session.scalars(select(Provider)).all()
+    images = session.scalars(select(ProviderImage)).all()
+    reviews = session.scalars(select(ProviderReview)).all()
+    images_by_provider: dict[str, list[ProviderImage]] = {}
+    reviews_by_provider: dict[str, list[ProviderReview]] = {}
+    for image in images:
+        images_by_provider.setdefault(image.provider_id, []).append(image)
+    for review in reviews:
+        reviews_by_provider.setdefault(review.provider_id, []).append(review)
+
+    assert len(providers) == len(seed["providers"]) == 16
+    assert len(images) == 64
+    assert len(reviews) == 63
+    for provider in providers:
+        provider_images = images_by_provider[provider.id]
+        provider_reviews = reviews_by_provider[provider.id]
+        assert len(provider_images) >= 3
+        assert len(provider_reviews) >= 3
+        assert sum(image.position == 1 for image in provider_images) == 1
+        assert all(image.url.startswith("https://") and image.alt_text for image in provider_images)
+        assert all(1 <= review.rating <= 5 for review in provider_reviews)
+        expected_rating = session.execute(
+            text("select round(avg(rating), 1) from provider_reviews where provider_id = :provider_id"),
+            {"provider_id": provider.id},
+        ).scalar_one()
+        actual_rating, actual_count = session.execute(
+            text("select rating_avg, rating_count from v_providers where id = :provider_id"),
+            {"provider_id": provider.id},
+        ).one()
+        assert actual_rating == pytest.approx(expected_rating)
+        assert actual_count == len(provider_reviews)
 
 
 def _reservation(session, code="EU-AB12CD", total=100, budget=1000):
