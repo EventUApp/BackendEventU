@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import ForeignKey, Integer, Text, Uuid, text
+from sqlalchemy import CheckConstraint, ForeignKey, Integer, Text, Uuid, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.shared.db import Base
@@ -10,6 +10,11 @@ from app.shared.db import Base
 
 class Payment(Base):
     __tablename__ = "payments"
+    __table_args__ = (
+        CheckConstraint("status IN ('aprobado','rechazado')"),
+        CheckConstraint("amount_cop > 0"),
+    )
+
     id: Mapped[str] = mapped_column(Uuid(as_uuid=False), primary_key=True)
     reservation_id: Mapped[str] = mapped_column(
         Uuid(as_uuid=False), ForeignKey("reservations.id", ondelete="RESTRICT")

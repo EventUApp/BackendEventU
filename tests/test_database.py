@@ -1,17 +1,34 @@
 import json
+import re
 import uuid
 from datetime import date
 from pathlib import Path
 
 import pytest
-from sqlalchemy import inspect, select, text
+from sqlalchemy import CheckConstraint, inspect, select, text
 from sqlalchemy.exc import IntegrityError
 
 from app.catalogo.models import Provider, ProviderImage, ProviderReview, ProviderVerification
+from app.pagos.models import Payment
 from app.reservas.models import Reservation, ReservationItem
 from app.shared.db import Base
 from app.shared.money import cost_for_guests
 from seed.load import load_seed
+
+
+def test_payment_model_has_only_documented_columns(engine):
+    columns = {column["name"] for column in inspect(engine).get_columns("payments")}
+    assert columns == {"id", "reservation_id", "status", "amount_cop", "reference", "created_at"}
+
+
+def test_payment_model_declares_status_and_amount_checks():
+    checks = {
+        re.sub(r"\s+", "", str(constraint.sqltext)).lower()
+        for constraint in Payment.__table__.constraints
+        if isinstance(constraint, CheckConstraint)
+    }
+    assert "statusin('aprobado','rechazado')" in checks
+    assert "amount_cop>0" in checks
 
 
 def test_migration_matches_models(engine):
@@ -140,6 +157,29 @@ def test_only_one_approved_payment_per_reservation(session):
     session.execute(text(ins), {"i": str(uuid.uuid4()), "r": rid, "s": "aprobado", "ref": "SIM-2"})
     with pytest.raises(IntegrityError):
         session.execute(text(ins), {"i": str(uuid.uuid4()), "r": rid, "s": "aprobado", "ref": "SIM-3"})
+
+
+@pytest.mark.parametrize(
+    ("status", "amount"),
+    [("pendiente", 100), ("aprobado", 0), ("rechazado", -1)],
+)
+def test_payment_migration_rejects_invalid_status_and_amount(session, status, amount):
+    rid = _reservation(session)
+    with pytest.raises(IntegrityError):
+        session.execute(
+            text(
+                "insert into payments (id,reservation_id,status,amount_cop,reference) "
+                "values (:id,:reservation_id,:status,:amount,:reference)"
+            ),
+            {
+                "id": str(uuid.uuid4()),
+                "reservation_id": rid,
+                "status": status,
+                "amount": amount,
+                "reference": f"SIM-{uuid.uuid4().hex}",
+            },
+        )
+    session.rollback()
 
 
 def test_rating_is_derived_from_reviews(session):
