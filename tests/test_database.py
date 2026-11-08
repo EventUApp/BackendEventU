@@ -8,7 +8,9 @@ from sqlalchemy import inspect, select, text
 from sqlalchemy.exc import IntegrityError
 
 from app.catalogo.models import Provider, ProviderImage, ProviderReview, ProviderVerification
+from app.reservas.models import Reservation, ReservationItem
 from app.shared.db import Base
+from app.shared.money import cost_for_guests
 from seed.load import load_seed
 
 
@@ -201,3 +203,61 @@ def test_reservation_without_budget_and_custom_modality(session):
         {"id": rid, "d": date(2027, 1, 10)},
     )
     assert session.execute(text("select count(*) from reservations where budget_cop is null")).scalar() == 1
+
+
+def test_reservation_models_preserve_service_snapshot_after_catalog_removal(session):
+    load_seed(session)
+    service = session.execute(
+        text(
+            "select s.id, s.category, s.name, s.price_model, s.base_price_cop, "
+            "p.name as provider_name "
+            "from services s join providers p on p.id = s.provider_id "
+            "where s.category = 'espacio' order by s.id limit 1"
+        )
+    ).one()
+    reservation_id = str(uuid.uuid4())
+    guests = 50
+    cost_cop = cost_for_guests(service.price_model, service.base_price_cop, guests)
+    reservation = Reservation(
+        id=reservation_id,
+        code="EU-SNAP01",
+        status="creada",
+        event_type="boda",
+        guests=guests,
+        budget_cop=None,
+        modality="personalizado",
+        total_cop=cost_cop,
+        customer_name="Organizador de prueba",
+        customer_email="organizador@example.invalid",
+        customer_phone="3000000000",
+        event_date=date(2027, 1, 10),
+    )
+    item = ReservationItem(
+        reservation_id=reservation_id,
+        category=service.category,
+        service_id=service.id,
+        service_name=service.name,
+        provider_name=service.provider_name,
+        price_model=service.price_model,
+        unit_price_cop=service.base_price_cop,
+        cost_cop=cost_cop,
+    )
+    session.add_all((reservation, item))
+    session.commit()
+
+    session.execute(text("delete from services where id = :service_id"), {"service_id": service.id})
+    session.commit()
+
+    saved_reservation = session.get(Reservation, reservation_id)
+    saved_item = session.get(ReservationItem, (reservation_id, service.category))
+    assert saved_reservation is not None
+    assert saved_reservation.status == "creada"
+    assert saved_reservation.budget_cop is None
+    assert saved_reservation.modality == "personalizado"
+    assert saved_item is not None
+    assert saved_item.service_id is None
+    assert saved_item.service_name == service.name
+    assert saved_item.provider_name == service.provider_name
+    assert saved_item.price_model == service.price_model
+    assert saved_item.unit_price_cop == service.base_price_cop
+    assert saved_item.cost_cop == cost_cop
