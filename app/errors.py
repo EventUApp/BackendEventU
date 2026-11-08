@@ -25,6 +25,7 @@ RESERVATION_VALIDATION_MESSAGES = {
     "customer.email": "Ingrese un correo electrónico válido.",
     "customer.phone": "Ingrese un teléfono de 10 dígitos.",
     "event_date": "Seleccione una fecha posterior a hoy.",
+    "code": "El número de reserva no es válido.",
 }
 PAYMENT_VALIDATION_MESSAGES = {
     "card.number": "Ingrese un número de tarjeta válido.",
