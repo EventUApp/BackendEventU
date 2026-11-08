@@ -4,9 +4,10 @@ from datetime import date
 from pathlib import Path
 
 import pytest
-from sqlalchemy import inspect, text
+from sqlalchemy import inspect, select, text
 from sqlalchemy.exc import IntegrityError
 
+from app.catalogo.models import Provider, ProviderVerification
 from app.shared.db import Base
 from seed.load import load_seed
 
@@ -39,6 +40,35 @@ def test_seed_is_idempotent_and_complete(session):
     assert n("select count(*) from providers where featured") == 6
     seed = json.loads((Path(__file__).parent.parent / "seed" / "seed.json").read_text(encoding="utf-8"))
     assert len(seed["services"]) == 35
+
+
+def test_provider_verification_models_load_seed_and_derive_status(session):
+    load_seed(session)
+    seed = json.loads((Path(__file__).parent.parent / "seed" / "seed.json").read_text(encoding="utf-8"))
+
+    providers = session.scalars(select(Provider)).all()
+    verifications = session.scalars(select(ProviderVerification)).all()
+    expected_checks = {
+        (
+            check["id"],
+            provider["id"],
+            check["check_type"],
+            check["checked_on"],
+        )
+        for provider in seed["providers"]
+        for check in provider["verifications"]
+    }
+    loaded_checks = {
+        (check.id, check.provider_id, check.check_type, check.checked_on.isoformat())
+        for check in verifications
+    }
+    verified_provider_ids = {check.provider_id for check in verifications}
+
+    assert {provider.id for provider in providers} == {provider["id"] for provider in seed["providers"]}
+    assert loaded_checks == expected_checks
+    assert session.execute(
+        text("select id from v_providers where verification_status = 'verificado' order by id")
+    ).scalars().all() == sorted(verified_provider_ids)
 
 
 def _reservation(session, code="EU-AB12CD", total=100, budget=1000):
