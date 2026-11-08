@@ -69,4 +69,6 @@ Aplica cuando el usuario pide implementar una tarea `T_HU_…` (por ejemplo desd
    - Descripción: criterios de aceptación con su estado, archivos cambiados, resultado de `make check`, supuestos y dudas abiertas.
    Si `gh` no está disponible, imprima el enlace o el texto sugerido del PR y diga que falta abrirlo a mano.
 6. **No haga** merge, no borre ramas, no cambie la configuración de GitHub ni de Render. El merge lo hace David tras revisar.
-7. Termine informando: nombre de la rama, hash del commit y URL del PR (si se creó).
+7. Termine informando: nombre de la rama, hash del commit y URL del PR (si se creó). 
+
+Formato del PR. Escriba la descripción en un archivo temporal con saltos de línea reales (nunca con \n escritos como texto) y úsela así: gh pr create --title "…" --body-file pr.md. Use este esquema con títulos ##: «Criterios de aceptación», «Archivos», «Verificación», «Supuestos y dudas abiertas». Después borre pr.md y no lo agregue al commit. Antes de terminar, revise con gh pr view --json body que no queden \n literales.
