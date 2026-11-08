@@ -6,13 +6,16 @@ import pytest
     ("budget_cop", "guests"),
     [(1_000_000, 1), (50_000_000, 500)],
 )
-def test_post_recommendations_accepts_valid_payload(client, event_type, budget_cop, guests):
+def test_post_recommendations_accepts_valid_payload(client, event_type, budget_cop, guests, monkeypatch):
+    from app.recomendador.domain.tipos import Recommendation
+
+    monkeypatch.setattr("app.recomendador.service.recomendar", lambda *_: Recommendation((), ()))
     body = {"budget_cop": budget_cop, "event_type": event_type, "guests": guests}
 
     response = client.post("/api/v1/recommendations", json=body)
 
     assert response.status_code == 200
-    assert response.json() == body
+    assert response.json() == {"packages": [], "unavailable": []}
 
 
 @pytest.mark.parametrize(
