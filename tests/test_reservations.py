@@ -58,7 +58,7 @@ def test_post_reservations_creates_unique_code_and_service_snapshot(client, sess
     assert len(result["items"]) == len(body["service_ids"])
     stored = session.execute(
         text(
-            "select r.budget_cop, r.modality, r.total_cop, i.service_id, i.service_name, "
+            "select r.budget_cop, r.modality, r.total_cop, i.service_id, i.category, i.service_name, "
             "i.provider_name, i.price_model, i.unit_price_cop, i.cost_cop "
             "from reservations r join reservation_items i on i.reservation_id = r.id "
             "where r.code = :code order by i.category"
@@ -69,8 +69,24 @@ def test_post_reservations_creates_unique_code_and_service_snapshot(client, sess
     assert all(row.budget_cop == 10_000_000 for row in stored)
     assert all(row.modality == "personalizado" for row in stored)
     assert sum(row.cost_cop for row in stored) == result["total_cop"]
-    assert all(row.service_id and row.service_name and row.provider_name for row in stored)
-    assert all(row.unit_price_cop > 0 for row in stored)
+    stored_by_service_id = {row.service_id: row for row in stored}
+    for service_id in body["service_ids"]:
+        catalog = session.execute(
+            text(
+                "select s.category, s.name, p.name as provider_name, s.price_model, "
+                "s.base_price_cop, case when s.price_model = 'fijo' then s.base_price_cop "
+                "else s.base_price_cop * :guests end as cost_cop "
+                "from services s join providers p on p.id = s.provider_id where s.id = :service_id"
+            ),
+            {"service_id": service_id, "guests": body["guests"]},
+        ).one()
+        snapshot = stored_by_service_id[service_id]
+        assert snapshot.service_name == catalog.name
+        assert snapshot.provider_name == catalog.provider_name
+        assert snapshot.price_model == catalog.price_model
+        assert snapshot.unit_price_cop == catalog.base_price_cop
+        assert snapshot.cost_cop == catalog.cost_cop
+        assert snapshot.category == catalog.category
 
     second_response = client.post("/api/v1/reservations", json=body)
     assert second_response.status_code == 201
@@ -79,12 +95,14 @@ def test_post_reservations_creates_unique_code_and_service_snapshot(client, sess
 
 def test_post_reservations_accepts_missing_budget(client, session):
     load_seed(session)
-    body = _reservation_payload(client, budget_cop=None)
+    body = _reservation_payload(client)
+    body.pop("budget_cop")
 
     response = client.post("/api/v1/reservations", json=body)
 
     assert response.status_code == 201
     assert response.json()["status"] == "creada"
+    assert response.json()["total_cop"] == body["expected_total_cop"]
     assert (
         session.execute(
             text("select budget_cop from reservations where code = :code"),
@@ -97,6 +115,7 @@ def test_post_reservations_accepts_missing_budget(client, session):
 @pytest.mark.parametrize(
     ("field", "value", "expected_message"),
     [
+        ("customer.name", "", "Ingrese su nombre."),
         ("customer.name", "   ", "Ingrese su nombre."),
         ("customer.email", "correo-invalido", "Ingrese un correo electrónico válido."),
         ("customer.phone", "300123", "Ingrese un teléfono de 10 dígitos."),
@@ -132,7 +151,10 @@ def test_post_reservations_rejects_mismatched_total(client, session):
 
     assert response.status_code == 409
     assert response.json()["error"]["code"] == "TOTAL_MISMATCH"
-    assert "No fue posible crear la reserva." in response.json()["error"]["message"]
+    assert (
+        response.json()["error"]["message"]
+        == "No fue posible crear la reserva. Revise su evento e intente nuevamente."
+    )
     assert session.execute(text("select count(*) from reservations")).scalar_one() == 0
 
 
