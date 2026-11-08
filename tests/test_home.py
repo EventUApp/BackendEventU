@@ -1,3 +1,5 @@
+from sqlalchemy import text
+
 from seed.load import load_seed
 
 
@@ -26,16 +28,36 @@ def test_home_returns_categories_and_featured_provider_summary(client, session):
     assert "verification_status" in first
 
 
-def test_home_featured_order_follows_rating_then_count(client, session):
+def test_home_featured_order_breaks_rating_ties_by_id_not_review_count(client, session):
     load_seed(session)
+    provider_ids = (
+        session.execute(text("select id from providers where featured order by id limit 2")).scalars().all()
+    )
+    assert len(provider_ids) == 2
+    first_id, second_id = provider_ids
+    session.execute(text("delete from provider_reviews"))
+    session.execute(text("update providers set featured = false"))
+    session.execute(
+        text("update providers set featured = true where id in (:first_id, :second_id)"),
+        {"first_id": first_id, "second_id": second_id},
+    )
+    session.execute(
+        text(
+            "insert into provider_reviews "
+            "(id, provider_id, author_name, rating, comment, reviewed_on) "
+            "values (:id, :provider_id, :author_name, 5, 'Prueba', '2026-01-01')"
+        ),
+        [
+            {"id": "00000000-0000-0000-0000-000000000001", "provider_id": first_id, "author_name": "A"},
+            {"id": "00000000-0000-0000-0000-000000000002", "provider_id": second_id, "author_name": "B"},
+            {"id": "00000000-0000-0000-0000-000000000003", "provider_id": second_id, "author_name": "C"},
+        ],
+    )
+    session.commit()
 
     r = client.get("/api/v1/home")
     featured = r.json()["featured"]
 
-    assert len(featured) == 6
-    for idx in range(1, len(featured)):
-        prev = featured[idx - 1]
-        curr = featured[idx]
-        prev_sort = (prev["rating_avg"] or -1, prev["rating_count"], prev["id"])
-        curr_sort = (curr["rating_avg"] or -1, curr["rating_count"], curr["id"])
-        assert prev_sort >= curr_sort
+    assert [item["id"] for item in featured] == [first_id, second_id]
+    assert [item["rating_avg"] for item in featured] == [5.0, 5.0]
+    assert [item["rating_count"] for item in featured] == [1, 2]
